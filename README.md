@@ -33,7 +33,7 @@ This repository will allow you to dynamically choose needed containers and autom
 <pre><code>sudo apt-get install git</code></pre>
 
 - Clone the repository with:
-<pre><code>git clone https://github.com/maniuch/LDS.git ~/LDS</code></pre>
+<pre><code>git clone https://github.com/GreenFrogSB/LDS.git ~/LDS</code></pre>
 
 <i>Do not change name of the folder on your local system it should stay as is for the script to work properly</i>
 

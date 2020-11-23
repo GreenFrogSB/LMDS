@@ -1,0 +1,14 @@
+  bazarr:
+    image: linuxserver/bazarr
+    container_name: bazarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - UMASK_SET=022 #optional
+    volumes:
+      - ./volumes/bazarr/config:/config
+      - ./Movies:/movies
+      - ./TVseries:/tv
+    ports:
+      - 6767:6767

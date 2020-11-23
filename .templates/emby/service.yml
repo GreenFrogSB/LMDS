@@ -1,0 +1,15 @@
+  emby:
+    image: linuxserver/emby
+    container_name: emby
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - UMASK_SET=022 #optional
+    volumes:
+      - ./volumes/emby:/config
+      - ./TVseries:/data/tvshows
+      - ./Movies:/data/movies
+    ports:
+      - 8096:8096
+      - 8920:8920 #optional

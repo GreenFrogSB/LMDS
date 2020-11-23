@@ -1,0 +1,12 @@
+  embystat:
+    image: linuxserver/embystat
+    container_name: embystat
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - ./volumes/embystat/config:/config
+    ports:
+      - 6555:6555
+      

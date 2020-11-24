@@ -28,10 +28,10 @@ This repository will allow you to dynamically choose needed containers and autom
 <i>Numbers after ":" identify a port that particular container will respond on, i.e. Portainer default port is :9000, point your browser it to your server IP adding :9000 at the end i.e. http://192.168.100.100:9000 you will see Portainer login page.</i>
 
 
-## Raspberry Pi LDS Server Docker Edition
+### Raspberry Pi LDS Server Docker Edition
 YouTube: https://youtu.be/oLxsSQIqOMw
 
-## GreenFrog Small Blog
+### GreenFrog Small Blog
 Blog link: http://greenfrog.eu5.net/ldsondocker.php
 
 ## How to Use it?

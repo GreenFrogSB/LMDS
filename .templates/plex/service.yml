@@ -7,7 +7,7 @@
       - PGID=1000
       - VERSION=docker
       - UMASK_SET=022 #optional
-#      - PLEX_CLAIM= #optional
+      # - PLEX_CLAIM= #optional
     volumes:
       - ./volumes/plex/library:/config
       - ./TVseries:/tv

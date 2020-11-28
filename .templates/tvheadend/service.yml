@@ -5,7 +5,7 @@
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Dublin
-#      - RUN_OPTS=<run options here> #optional
+      #- RUN_OPTS=<run options here> #optional
     volumes:
       - ./volumes/tvheadend/config:/config
       - ./TVrecordings:/recordings
@@ -13,6 +13,6 @@
       - 9981:9981
       - 9982:9982
     devices:
-#      - /dev/dri:/dev/dri #optional
-#      - /dev/dvb:/dev/dvb #optional
+      #- /dev/dri:/dev/dri #optional
+      #- /dev/dvb:/dev/dvb #optional
     restart: unless-stopped

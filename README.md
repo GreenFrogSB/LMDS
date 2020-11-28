@@ -19,8 +19,10 @@ This repository will allow you to dynamically choose needed containers and autom
   <li> Deluge - Torrent Client : 8112</li>
   <li> qBittorrent - Torrent Client : 15080</li>
   <li> Transmission - Torrent Client : 9091</li>
+  <li> Plex - Media manager : 32400/web</li>
   <li> Emby - Media manager like Plex : 8096</li>
   <li> EmbyStat - Statistics for Emby : 6555</li>
+  <li> TVheadend - TV streaming server : 9981 </li>
   <li> Ngnix - Web Server with links to all services deployed : 80</li>
   <li> Pi-Hole - Private DNS sinkhole : 8089</li>
   </ul>

@@ -15,8 +15,10 @@ declare -A cont_array=(
 	[deluge]="Deluge - Torrent Client"
 	[qbittorrent]="qBittorrent - Torrent Client"
 	[transmission]="Transmission - Torrent Client"
+	[plex]="Plex - Media manager"
 	[emby]="Emby - Media manager like Plex"
 	[embystat]="EmbyStat - Statistics for Emby"
+	[tvheadend]="TVheadend - TV streaming server"
 	[nginx]="Ngnix - Web Server with links to all servises deployed"
 	[pihole]="Pi-Hole - Private DNS sinkhole"
 )
@@ -36,6 +38,8 @@ declare -a armhf_keys=(
 	"embystat"
 	"transmission"
 	"nginx"
+	"plex"
+	"tvheadend"
 )
 
 sys_arch=$(uname -m)

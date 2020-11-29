@@ -31,15 +31,15 @@ declare -a armhf_keys=(
 	"lidarr"
 	"bazarr"
 	"jackett"
+	"emby"
+	"embystat"
+	"plex"
+	"tvheadend"
+	"transmission"
 	"deluge"
 	"qbittorrent"
 	"pihole"
-	"emby"
-	"embystat"
-	"transmission"
 	"nginx"
-	"plex"
-	"tvheadend"
 )
 
 sys_arch=$(uname -m)

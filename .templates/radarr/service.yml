@@ -1,5 +1,5 @@
   radarr:
-    image: linuxserver/radarr
+    image: linuxserver/radarr:5.14
     container_name: radarr
     environment:
       - PUID=1000
@@ -12,4 +12,3 @@
       - ./Downloads:/downloads
     ports:
       - 7878:7878
-      

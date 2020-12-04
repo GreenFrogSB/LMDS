@@ -150,7 +150,7 @@ function yml_builder() {
 #---------------------------------------------------------------------------------------------------
 # Project updates
 echo "checking for project update"
-git fetch origin master
+git fetch origin main
 
 if [ $(git status | grep -c "Your branch is up to date") -eq 1 ]; then
 	#delete .outofdate if it exisist
@@ -399,7 +399,7 @@ case $mainmenu_selection in
 
 "update")
 	echo "Pulling latest project file from Github.com ---------------------------------------------"
-	git pull origin master
+	git pull origin main
 	echo "git status ------------------------------------------------------------------------------"
 	git status
 	;;

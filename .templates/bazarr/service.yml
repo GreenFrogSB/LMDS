@@ -12,3 +12,4 @@
       - ./TVseries:/tv
     ports:
       - 6767:6767
+    restart: unless-stopped

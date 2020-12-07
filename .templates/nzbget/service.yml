@@ -1,0 +1,13 @@
+  nzbget:
+    image: ghcr.io/linuxserver/nzbget
+    container_name: nzbget
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - ./volumes/nzbget/config:/config
+      - ./Downloads:/downloads
+    ports:
+      - 6789:6789
+    restart: unless-stopped

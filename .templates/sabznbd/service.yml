@@ -1,0 +1,15 @@
+  sabnzbd:
+    image: ghcr.io/linuxserver/sabnzbd
+    container_name: sabnzbd
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - ./volumes/sabnzdb/config:/config
+      - ./Downloads:/downloads
+      #- /path/to/incomplete/downloads:/incomplete-downloads #optional
+    ports:
+      - 8080:8080
+      - 9090:9090
+    restart: unless-stopped

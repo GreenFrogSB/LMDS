@@ -1,0 +1,26 @@
+  jellyfin:
+    image: ghcr.io/linuxserver/jellyfin:bionic
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - UMASK_SET=<022> #optional
+    volumes:
+      - ./volumes/jellyfin/config:/config
+      - ./TVseries:/data/tvshows
+      - ./Movies:/data/movies
+      #- /opt/vc/lib:/opt/vc/lib #optional
+    ports:
+      - 8096:8096
+      - 8920:8920 #optional
+      - 7359:7359/udp #optional
+      - 1900:1900/udp #optional
+    #devices:
+      #- /dev/dri:/dev/dri #optional
+      #- /dev/vcsm:/dev/vcsm #optional
+      #- /dev/vchiq:/dev/vchiq #optional
+      #- /dev/video10:/dev/video10 #optional
+      #- /dev/video11:/dev/video11 #optional
+      #- /dev/video12:/dev/video12 #optional
+    restart: unless-stopped

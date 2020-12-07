@@ -1,5 +1,5 @@
   plex:
-    image: ghcr.io/linuxserver/plex
+    image: ghcr.io/linuxserver/plex:bionic
     container_name: plex
     network_mode: host
     environment:

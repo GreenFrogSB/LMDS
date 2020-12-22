@@ -1,6 +1,7 @@
   pihole:
     container_name: pihole
     image: pihole/pihole:latest
+    # network_mode: host
     ports:
       - "53:53/tcp"
       - "53:53/udp"
@@ -20,4 +21,3 @@
     cap_add:
       - NET_ADMIN
     restart: unless-stopped
-    

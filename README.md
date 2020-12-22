@@ -27,7 +27,7 @@ This repository will allow you to dynamically choose needed containers and autom
   <li> EmbyStat - Statistics for Emby : 6555</li>
   <li> TVheadend - TV streaming server : 9981 </li>
   <li> Ngnix - Web Server with links to all services deployed : 80</li>
-  <li> Pi-Hole - Private DNS sinkhole : 8089</li>
+  <li> Pi-Hole - Private DNS sinkhole : 8089 <b>WebPass: <i>greenfrog</i></b></li>
   </ul>
 <br>
 <i>Numbers after ":" identify a port that particular container will respond on, i.e. Portainer default port is :9000, point your browser it to your server IP adding :9000 at the end i.e. http://192.168.100.100:9000 you will see Portainer login page.</i>
@@ -40,6 +40,8 @@ YouTube: https://youtu.be/oLxsSQIqOMw
 Blog link: http://greenfrog.eu5.net/ldsondocker.php
 
 ## How to Use it?
+<b>Before you start using LDS, set your Raspberry Pi IP address to be static, it will make some things easier later on.
+Static IP address is not absolutely necessary just to try the project and find out if you like it, but i.e. if you would like to properly utilize pihole in your network - you will have to point your router to your RPi IP for DNS resolution.</b>
 
 - install git using a command:
 <pre><code>sudo apt-get install git</code></pre>

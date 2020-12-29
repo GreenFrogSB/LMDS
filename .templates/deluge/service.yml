@@ -1,7 +1,7 @@
   deluge:
     image: linuxserver/deluge
     container_name: deluge
-    network_mode: host
+    # network_mode: host
     environment:
       - PUID=1000
       - PGID=1000

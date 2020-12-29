@@ -10,6 +10,6 @@
       # - PLEX_CLAIM= #optional
     volumes:
       - ./volumes/plex/library:/config
-      - ./TVseries:/tv
-      - ./Movies:/movies
+      - ./media/tvshows:/tv
+      - ./media/movies:/movies
     restart: unless-stopped

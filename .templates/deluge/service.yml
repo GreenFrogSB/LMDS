@@ -10,7 +10,7 @@
       - DELUGE_LOGLEVEL=error #optional
     volumes:
       - ./volumes/deluge/config:/config
-      - ./Downloads:/downloads
+      - ./downloads:/downloads
     ports:
       - 8112:8112
       - 58846:58846

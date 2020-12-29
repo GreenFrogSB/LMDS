@@ -8,7 +8,7 @@
       #- RUN_OPTS=<run options here> #optional
     volumes:
       - ./volumes/tvheadend/config:/config
-      - ./TVrecordings:/recordings
+      - ./media/TVrecordings:/recordings
     ports:
       - 9981:9981
       - 9982:9982

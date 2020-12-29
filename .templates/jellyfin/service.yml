@@ -8,8 +8,8 @@
       - UMASK_SET=<022> #optional
     volumes:
       - ./volumes/jellyfin/config:/config
-      - ./TVseries:/data/tvshows
-      - ./Movies:/data/movies
+      - ./media/tvshows:/data/tvshows
+      - ./media/movies:/data/movies
       #- /opt/vc/lib:/opt/vc/lib #optional
     ports:
       - 8096:8096

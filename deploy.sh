@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #make sure you are in right directory
-pushd ~/LDS
+# pushd ~/LDS
 
 #Menu Display Name
 #[CONTAINER NAME]="MENU Text"

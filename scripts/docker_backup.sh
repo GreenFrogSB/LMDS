@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pushd ~/LDS
+# pushd ~/LDS
 
 [ -d ./backups ] || mkdir ./backups
 
@@ -14,7 +14,7 @@ logfile=./backups/log_local.txt
 backupfile="backup-$(date +"%Y-%m-%d_%H%M").tar.gz"
 
 #compress the backups folders to archive
-echo "compressing stack folders"
+echo "compressing folders"
 sudo tar -czf \
 	./backups/$backupfile \
 	-T list.txt
@@ -36,7 +36,7 @@ du -h ./backups/$backupfile
 #remove older local backup files
 #to change backups retained,  change below +5 to whatever you want (days retained +1)
 ls -t1 ./backups/backup* | tail -n +5 | sudo xargs rm -f
-echo "last four local backup files are saved in ~/LDS/backups"
+echo "recent four local backup files are saved in ~/LDS/backups"
 
 
 
@@ -66,7 +66,7 @@ if [ -f ./backups/dropbox ]; then
 	echo "deleting old backups from dropbox if they exist - last 4 files are kept"
 
 	#check older files exist on dropbox, if yes then delete them
-	if [ $( echo "$files" | grep -c "backup") -ne 0 ] ; then	
+	if [ $( echo "$files" | grep -c "backup") -ne 0 ] ; then
 		input=$dropboxlog
 		while IFS= read -r file
 		do

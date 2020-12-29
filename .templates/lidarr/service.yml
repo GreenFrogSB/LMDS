@@ -8,8 +8,7 @@
       - UMASK_SET=022 #optional
     volumes:
       - ./volumes/lidarr/config:/config
-      - ./Music:/music
-      - ./Downloads:/downloads
+      - ./media/music:/music
+      - ./downloads:/downloads
     ports:
       - 8686:8686
-      

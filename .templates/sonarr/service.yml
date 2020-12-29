@@ -8,8 +8,8 @@
       - UMASK_SET=022 #optional
     volumes:
       - ./volumes/sonarr/data:/config
-      - ./TVseries:/tv
-      - ./Downloads:/downloads
+      - ./media/tvshows:/tv
+      - ./downloads:/downloads
     ports:
       - 8989:8989
     restart: unless-stopped

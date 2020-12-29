@@ -10,10 +10,9 @@
 #      - PASS=password #optional
     volumes:
       - ./volumes/transmission/config:/config
-      - ./Downloads:/downloads
-      - ./TransmissionWathFolder:/watch
+      - ./downloads:/downloads
+      - ./downloads/TransmissionWathFolder:/watch
     ports:
       - 9091:9091
       - 51413:51413
       - 51413:51413/udp
-      

@@ -8,7 +8,7 @@
       - WEBUI_PORT=15080
     volumes:
       - ./volumes/qbittorrent/config:/config
-      - ./Downloads:/downloads
+      - ./downloads:/downloads
     ports:
       - 6881:6881
       - 6881:6881/udp

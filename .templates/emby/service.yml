@@ -7,9 +7,9 @@
       - TZ=Europe/London
       - UMASK_SET=022 #optional
     volumes:
-      - ./volumes/emby:/config
-      - ./TVseries:/data/tvshows
-      - ./Movies:/data/movies
+      - ./volumes/emby/config:/config
+      - ./media/tvshows:/data/tvshows
+      - ./media/movies:/data/movies
     ports:
       - 8096:8096
       - 8920:8920 #optional

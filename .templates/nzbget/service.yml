@@ -7,7 +7,7 @@
       - TZ=Europe/London
     volumes:
       - ./volumes/nzbget/config:/config
-      - ./Downloads:/downloads
+      - ./downloads:/downloads
     ports:
       - 6789:6789
     restart: unless-stopped

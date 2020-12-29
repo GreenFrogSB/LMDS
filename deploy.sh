@@ -98,11 +98,11 @@ function yml_builder() {
 
 		if [ -d ./services/$1 ]; then
 			#directory already exists prompt user to overwrite
-			sevice_overwrite=$(whiptail --radiolist --title "Overwrite Option" --notags \
-				"$1 service directory has been detected, use [SPACEBAR] to select you overwrite option" 20 78 12 \
-				"none" "Do not overwrite" "ON" \
+			sevice_overwrite=$(whiptail --radiolist --title "Deployment Option" --notags \
+				"$1 was already created before, use [SPACEBAR] to select redeployment configuation" 20 78 12 \
+				"none" "Use recent config" "ON" \
 				"env" "Preserve Environment and Config files" "OFF" \
-				"full" "Pull full service from template" "OFF" \
+				"full" "Pull config from template" "OFF" \
 				3>&1 1>&2 2>&3)
 
 			case $sevice_overwrite in
@@ -216,7 +216,7 @@ case $mainmenu_selection in
 "build")
 
 	title=$'Container Selection'
-	message=$'Use the [SPACEBAR] to select which containers you would like to install'
+	message=$'Use the [SPACEBAR] to select which containers you would like to deploy'
 	entry_options=()
 
 	#check architecture and display appropriate menu

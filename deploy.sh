@@ -216,7 +216,7 @@ case $mainmenu_selection in
 "build")
 
 	title=$'Container Selection'
-	message=$'Use the [SPACEBAR] to select which containers you would like to deploy'
+	message=$'Use the [SPACEBAR] to select which containers you would like to use'
 	entry_options=()
 
 	#check architecture and display appropriate menu

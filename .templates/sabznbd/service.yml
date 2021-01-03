@@ -6,7 +6,7 @@
       - PGID=1000
       - TZ=Europe/London
     volumes:
-      - ./volumes/sabnzdb/config:/config
+      - ./volumes/sabnzbd/config:/config
       - ./downloads:/downloads
       #- /path/to/incomplete/downloads:/incomplete-downloads #optional
     ports:

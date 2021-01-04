@@ -181,9 +181,8 @@ mainmenu_selection=$(whiptail --title "Main Menu" --menu --notags \
 	"commands" "Docker commands" \
 	"misc" "Miscellaneous commands" \
 	"update" "Update LDS Stack" \
-	# "backup" "Backup LDS - (external scripts)" \
 	3>&1 1>&2 2>&3)
-
+# "backup" "Backup LDS - (external scripts)" \
 
 
 case $mainmenu_selection in

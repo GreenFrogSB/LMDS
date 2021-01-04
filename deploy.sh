@@ -193,7 +193,7 @@ case $mainmenu_selection in
 	if command_exists docker; then
 		echo -e "\e[30;48;5;82mdocker already installed\e[0m"
 	else
-		echo -e "\e[33m;1Instaling Docker - please wait\e[0m"
+		echo -e "\e[33m;1mInstaling Docker - please wait\e[0m"
 		curl -fsSL https://get.docker.com | sh &> /dev/null
 		sudo usermod -aG docker $USER &> /dev/null
 		echo -e "\e[32;1mDocker Installed\e[0m"

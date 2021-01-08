@@ -22,7 +22,7 @@ declare -A cont_array=(
 	[emby]="Emby - Media manager like Plex"
 	[embystat]="EmbyStat - Statistics for Emby"
 	[tvheadend]="TVheadend - TV streaming server"
-	[nginx]="Ngnix - Web Server with links to all servises deployed"
+	[nginx]="Ngnix - Web Server"
 	[pihole]="Pi-Hole - Private DNS sinkhole"
 )
 

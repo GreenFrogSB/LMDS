@@ -26,7 +26,7 @@ This repository will allow you to dynamically choose needed containers and autom
   <li> Plex - Media manager : 32400/web</li>
   <li> EmbyStat - Statistics for Emby : 6555</li>
   <li> TVheadend - TV streaming server : 9981 </li>
-  <li> Ngnix - Web Server with links to all services deployed : 80</li>
+  <li> Ngnix - Web Server - for future use clear instance for now: 80</li>
   <li> Pi-Hole - Private DNS sinkhole : 8089 <b>WebPass: <i>greenfrog</i></b></li>
   </ul>
 <br>

@@ -37,7 +37,7 @@ This repository will allow you to dynamically choose needed containers and autom
 YouTube: https://youtu.be/oLxsSQIqOMw
 
 ### GreenFrog Small Blog
-Blog link: http://greenfrog.eu5.net/LMDSondocker.php
+Blog link: http://greenfrognest.com/lmdsondocker.php
 
 ## How to Use it?
 <b>Before you start using LMDS, set your Raspberry Pi IP address to be static, it will make some things easier later on.

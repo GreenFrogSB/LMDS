@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# pushd ~/LDS
+# pushd ~/LMDS
 
 [ -d ./backups ] || mkdir ./backups
 
@@ -36,7 +36,7 @@ du -h ./backups/$backupfile
 #remove older local backup files
 #to change backups retained,  change below +5 to whatever you want (days retained +1)
 ls -t1 ./backups/backup* | tail -n +5 | sudo xargs rm -f
-echo "recent four local backup files are saved in ~/LDS/backups"
+echo "recent four local backup files are saved in ~/LMDS/backups"
 
 
 
@@ -44,7 +44,7 @@ echo "recent four local backup files are saved in ~/LDS/backups"
 if [ -f ./backups/dropbox ]; then
 
 	#setup variables
-	dropboxfolder=/LDSBU
+	dropboxfolder=/LMDSBU
 	dropboxuploader=~/Dropbox-Uploader/dropbox_uploader.sh
 	dropboxlog=./backups/log_dropbox.txt
 
@@ -84,7 +84,7 @@ if [ -f ./backups/rclone ]; then
 	echo "synching to Google Drive"
 	echo "latest 4 backup files are kept"
 	#sync local backups to gdrive (older gdrive copies will be deleted)
-	rclone sync -P ./backups --include "/backup*"  gdrive:/LDSBU/
+	rclone sync -P ./backups --include "/backup*"  gdrive:/LMDSBU/
 	echo "synch with Google Drive complete"
 fi
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #make sure you are in right directory
-# pushd ~/LDS
+# pushd ~/LMDS
 
 #Menu Display Name
 #[CONTAINER NAME]="MENU Text"
@@ -177,12 +177,12 @@ fi
 mainmenu_selection=$(whiptail --title "Main Menu" --menu --notags \
 	"" 20 78 12 -- \
 	"install" "Install Docker" \
-	"build" "Build LDS Stack" \
+	"build" "Build LMDS Stack" \
 	"commands" "Docker commands" \
 	"misc" "Miscellaneous commands" \
-	"update" "Update LDS Stack" \
+	"update" "Update LMDS Stack" \
 	3>&1 1>&2 2>&3)
-# "backup" "Backup LDS - (external scripts)" \
+# "backup" "Backup LMDS - (external scripts)" \
 
 
 case $mainmenu_selection in
@@ -291,7 +291,7 @@ case $mainmenu_selection in
 	docker_selection=$(
 		whiptail --title "Docker commands" --menu --notags \
 			"Shortcut to common docker commands" 20 78 12 -- \
-			"aliases" "Add LDS_up and LDS_down aliases" \
+			"aliases" "Add LMDS_up and LMDS_down aliases" \
 			"start" "Start stack" \
 			"restart" "Restart stack" \
 			"stop" "Stop stack" \
@@ -312,8 +312,8 @@ case $mainmenu_selection in
 	"prune_images") ./scripts/prune-images.sh ;;
 	"aliases")
 		touch ~/.bash_aliases
-		if [ $(grep -c 'LDS' ~/.bash_aliases) -eq 0 ]; then
-			echo ". ~/LDS/.bash_aliases" >>~/.bash_aliases
+		if [ $(grep -c 'LMDS' ~/.bash_aliases) -eq 0 ]; then
+			echo ". ~/LMDS/.bash_aliases" >>~/.bash_aliases
 			echo "added aliases"
 		else
 			echo "aliases already added"
@@ -344,16 +344,16 @@ case $mainmenu_selection in
 		fi
 
 		#add enable file for Dropbox-Uploader
-		[ -d ~/LDS/backups ] || sudo mkdir -p ~/LDS/backups/
-		sudo touch ~/LDS/backups/dropbox
+		[ -d ~/LMDS/backups ] || sudo mkdir -p ~/LMDS/backups/
+		sudo touch ~/LMDS/backups/dropbox
 		;;
 	"rclone")
 		sudo apt install -y rclone
 		echo "Please run 'rclone config' to configure the rclone google drive backup"
 
 		#add enable file for rclone
-		[ -d ~/LDS/backups ] || sudo mkdir -p ~/LDS/backups/
-		sudo touch ~/LDS/backups/rclone
+		[ -d ~/LMDS/backups ] || sudo mkdir -p ~/LMDS/backups/
+		sudo touch ~/LMDS/backups/rclone
 		;;
 	esac
 	;;

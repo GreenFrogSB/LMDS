@@ -2,8 +2,8 @@
     image: linuxserver/radarr:5.14
     container_name: radarr
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=0
+      - PGID=0
       - TZ=Europe/London
       - UMASK_SET=022 #optional
     volumes:

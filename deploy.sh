@@ -403,42 +403,6 @@ case $mainmenu_selection in
 	esac
 	;;
 
-<< 'OLD-BACKUP'
-"backup")
-	backup_sellection=$(whiptail --title "Backup Options" --menu --notags \
-		"Select backup option" 20 78 12 -- \
-		"dropbox-uploader" "Dropbox-Uploader" \
-		"rclone" "google drive via rclone" \
-		3>&1 1>&2 2>&3)
-
-	case $backup_sellection in
-
-	"dropbox-uploader")
-		if [ ! -d ~/Dropbox-Uploader ]; then
-			git clone https://github.com/andreafabrizi/Dropbox-Uploader.git ~/Dropbox-Uploader
-			chmod +x ~/Dropbox-Uploader/dropbox_uploader.sh
-			pushd ~/Dropbox-Uploader && ./dropbox_uploader.sh
-			popd
-		else
-			echo "Dropbox uploader already installed"
-		fi
-
-		#add enable file for Dropbox-Uploader
-		[ -d ~/LMDS/backups ] || sudo mkdir -p ~/LMDS/backups/
-		sudo touch ~/LMDS/backups/dropbox
-		;;
-	"rclone")
-		sudo apt install -y rclone
-		echo "Please run 'rclone config' to configure the rclone google drive backup"
-
-		#add enable file for rclone
-		[ -d ~/LMDS/backups ] || sudo mkdir -p ~/LMDS/backups/
-		sudo touch ~/LMDS/backups/rclone
-		;;
-	esac
-	;;
-OLD-BACKUP
-
 	#MAINMENU Misc commands------------------------------------------------------------
 "misc")
 	misc_sellection=$(

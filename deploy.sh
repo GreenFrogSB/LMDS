@@ -356,37 +356,36 @@ case $mainmenu_selection in
 		backupfile="LMDSbackup-$(date +"%Y-%m-%d_%H%M").tar.gz"
 
 		#compress the backups folders to archive
-		echo "compressing folders"
+		echo "\e[32;1m======================================================\e[0m"
+		echo "\e[32;1mCreating Backup\e[0m"
 			sudo tar -czf \
 			./LMDSBackups/$backupfile \
 			-T list.txt
-
 			rm list.txt
 
 		#set permission for backup files
 		sudo chown pi:pi ./LMDSBackups/LMDS*
 
 		#create local logfile and append the latest backup file to it
-		echo "backup saved to ./LMDSBackups/$backupfile"
+		echo "\e[32;1mBackup created:\e[0m  \e[37;3mdu -h ./LMDSBackups/$backupfile\e[0m"
 		sudo touch $logfile
 		sudo chown pi:pi $logfile
 		echo $backupfile >>$logfile
 
 		#show size of archive file
-		du -h ./LMDSBackups/$backupfile
+		# du -h ./LMDSBackups/$backupfile
 
 
 		#remove older local backup files
 		#to change backups retained,  change below +5 to whatever you want (days retained +1)
 		ls -t1 ./LMDSBackups/LMDS* | tail -n +5 | sudo xargs rm -f
-		echo "recent four local backup files are saved in ~/LMDSBackups/LMDSbackups"
-
-		echo "Synching to Google Drive"
-		echo "latest 4 backup files are kept"
+		echo "\e[36;1mRecent backup files are saved in \e[37;3m~/LMDSBackups/LMDSbackups\e[0m"
+		echo "\e[36;1mSynching to Google Drive\e[0m"
+		echo "\e[36;1mOnly latest 4 backup files are kept\e[0m"
 		
 		#sync local backups to gdrive (older gdrive copies will be deleted)
-		rclone sync -P ./LMDSBackups --include "/LMDSbackup*"  gdrive:/LMDSBackups/
-		echo "synch with Google Drive complete"
+		rclone sync -P ./LMDSBackups --include "/LMDSbackup*"  gdrive:/LMDSBackups/ >> null
+		echo "\e[35;1m Sync with Google Drive complete\e[0m"
 	;;
 
 	"restore_rclone")
@@ -395,7 +394,7 @@ case $mainmenu_selection in
 		
 		#sync gdrive to local 
 		rclone sync -P gdrive:/LMDSBackups/ --include "/LMDSbackup*" ./LMDSBackups 
-		echo "synch with Google Drive complete"
+		echo "\e[35;1m Sync with Google Drive complete\e[0m"
 
 
 	 ;;

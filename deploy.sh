@@ -181,6 +181,7 @@ mainmenu_selection=$(whiptail --title "Main Menu" --menu --notags \
 	"commands" "Docker commands" \
 	"misc" "Miscellaneous commands" \
 	"update" "Update LMDS Stack" \
+	"backup" "Backup and Restore LMDS" \
 	3>&1 1>&2 2>&3)
 # "backup" "Backup LMDS - (external scripts)" \
 
@@ -325,6 +326,85 @@ case $mainmenu_selection in
 	;;
 	#Backup menu ---------------------------------------------------------------------
 "backup")
+	backup_selection=$(
+		whiptail --title "Backup and Restore LMDS" --menu --notags \
+			"Comment" 20 78 12 -- \
+			"rclone" "Configure backup destination with rclone" \
+			"backup_rclone" "Backup" \
+			"restore_rclone" "Restore" \
+			3>&1 1>&2 2>&3
+	)
+
+	case $backup_selection in
+	"rclone")
+		sudo apt install -y rclone
+		echo "Please run \e[32;1mrclone config\e[0m to configure the rclone google drive backup"
+
+		#add enable file for rclone
+		[ -d ~/LMDS/LMDSBackups ] || sudo mkdir -p ~/LMDS/LMDSBackups/
+		sudo touch ~/LMDS/LMDSBackups/rclone
+		;;
+
+	"backup_rclone") 
+		#create the list of files to backup
+		echo "./docker-compose.yml" >list.txt
+		echo "./services/" >>list.txt
+		echo "./volumes/" >>list.txt
+
+		#setup variables
+		logfile=./LMDSBackups/log_local.txt
+		backupfile="LMDSbackup-$(date +"%Y-%m-%d_%H%M").tar.gz"
+
+		#compress the backups folders to archive
+		echo "compressing folders"
+			sudo tar -czf \
+			./LMDSBackups/$backupfile \
+			-T list.txt
+
+			rm list.txt
+
+		#set permission for backup files
+		sudo chown pi:pi ./LMDSBackups/LMDS*
+
+		#create local logfile and append the latest backup file to it
+		echo "backup saved to ./LMDSBackups/$backupfile"
+		sudo touch $logfile
+		sudo chown pi:pi $logfile
+		echo $backupfile >>$logfile
+
+		#show size of archive file
+		du -h ./LMDSBackups/$backupfile
+
+
+		#remove older local backup files
+		#to change backups retained,  change below +5 to whatever you want (days retained +1)
+		ls -t1 ./LMDSBackups/LMDS* | tail -n +5 | sudo xargs rm -f
+		echo "recent four local backup files are saved in ~/LMDSBackups/LMDSbackups"
+
+		echo "Synching to Google Drive"
+		echo "latest 4 backup files are kept"
+		
+		#sync local backups to gdrive (older gdrive copies will be deleted)
+		rclone sync -P ./LMDSBackups --include "/LMDSbackup*"  gdrive:/LMDSBackups/
+		echo "synch with Google Drive complete"
+	;;
+
+	"restore_rclone")
+	#add enable file for rclone
+		[ -d ~/LMDS/LMDSBackups ] || sudo mkdir -p ~/LMDS/LMDSBackups/
+		
+		#sync gdrive to local 
+		rclone sync -P gdrive:/LMDSBackups/ --include "/LMDSbackup*" ./LMDSBackups 
+		echo "synch with Google Drive complete"
+
+
+	 ;;
+
+	esac
+	;;
+
+<< 'OLD-BACKUP'
+"backup")
 	backup_sellection=$(whiptail --title "Backup Options" --menu --notags \
 		"Select backup option" 20 78 12 -- \
 		"dropbox-uploader" "Dropbox-Uploader" \
@@ -357,6 +437,8 @@ case $mainmenu_selection in
 		;;
 	esac
 	;;
+OLD-BACKUP
+
 	#MAINMENU Misc commands------------------------------------------------------------
 "misc")
 	misc_sellection=$(

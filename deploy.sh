@@ -328,17 +328,19 @@ case $mainmenu_selection in
 "backup")
 	backup_selection=$(
 		whiptail --title "Backup and Restore LMDS" --menu --notags \
-			"Comment" 20 78 12 -- \
+			"While configuring rclone to work with Google Drive (option 12), make sure you give it a name (gdrive)" 20 78 12 -- \
+			"Be carefull when you restore from backup. All containers will be stop and their settings overwritten with the backup, then all will start again.Only most recent backup is restored automatically." \
 			"rclone" "Configure backup destination with rclone" \
 			"backup_rclone" "Backup" \
 			"restore_rclone" "Restore" \
 			3>&1 1>&2 2>&3
 	)
 
+
 	case $backup_selection in
 	"rclone")
 		sudo apt install -y rclone
-		echo "Please run \e[32;1mrclone config\e[0m to configure the rclone google drive backup"
+		echo -e "Please run \e[32;1mrclone config\e[0m and create rclone (gdrive) backup destination"
 
 		#add enable file for rclone
 		[ -d ~/LMDS/LMDSBackups ] || sudo mkdir -p ~/LMDS/LMDSBackups/
@@ -347,54 +349,78 @@ case $mainmenu_selection in
 
 	"backup_rclone") 
 		#create the list of files to backup
-		echo "./docker-compose.yml" >list.txt
-		echo "./services/" >>list.txt
-		echo "./volumes/" >>list.txt
+        echo "./docker-compose.yml" >list.txt
+        echo "./services/" >>list.txt
+        echo "./volumes/" >>list.txt
 
-		#setup variables
-		logfile=./LMDSBackups/log_local.txt
-		backupfile="LMDSbackup-$(date +"%Y-%m-%d_%H%M").tar.gz"
+        #setup variables
+        logfile=./LMDSBackups/log_local.txt
+        backupfile="LMDSbackup-$(date +"%Y-%m-%d_%H%M").tar.gz"
 
-		#compress the backups folders to archive
-		echo "\e[32;1m======================================================\e[0m"
-		echo "\e[32;1mCreating Backup\e[0m"
-			sudo tar -czf \
-			./LMDSBackups/$backupfile \
-			-T list.txt
-			rm list.txt
+        #compress the backups folders to archive
+        echo -e "\e[32m======================================================\e[0m"
+        echo -e "\e[36;1m    Creating backup file ... \e[0m"
+                        sudo tar -czf \
+                        ./LMDSBackups/$backupfile \
+                        -T list.txt
+                        rm list.txt
 
-		#set permission for backup files
-		sudo chown pi:pi ./LMDSBackups/LMDS*
+        #set permission for backup files
+        sudo chown pi:pi ./LMDSBackups/LMDS*
 
-		#create local logfile and append the latest backup file to it
-		echo "\e[32;1mBackup created:\e[0m  \e[37;3mdu -h ./LMDSBackups/$backupfile\e[0m"
-		sudo touch $logfile
-		sudo chown pi:pi $logfile
-		echo $backupfile >>$logfile
+        #create local logfile and append the latest backup file to it
+        echo -e "\e[36;1m    Backup file created \e[32;1msucessfully\e[0m"
+        sudo touch $logfile
+        sudo chown pi:pi $logfile
+        echo $backupfile >>$logfile
 
-		#show size of archive file
-		# du -h ./LMDSBackups/$backupfile
+        #show size of archive file
+        # du -h ./LMDSBackups/$backupfile
 
+        #remove older local backup files
+        #to change backups retained,  change below +5 to whatever you want (days retained +1)
+        ls -t1 ./LMDSBackups/LMDS* | tail -n +5 | sudo xargs rm -f
+        echo -e "\e[36;1m    Backup files are saved in \e[37;3m~/LMDSBackups/\e[0m"
+        echo -e "\e[36;1m    Only recent 4 backup files are kept\e[0m"
+        echo -e "\e[36;1m    Synching to Google Drive ... \e[0m"
 
-		#remove older local backup files
-		#to change backups retained,  change below +5 to whatever you want (days retained +1)
-		ls -t1 ./LMDSBackups/LMDS* | tail -n +5 | sudo xargs rm -f
-		echo "\e[36;1mRecent backup files are saved in \e[37;3m~/LMDSBackups/LMDSbackups\e[0m"
-		echo "\e[36;1mSynching to Google Drive\e[0m"
-		echo "\e[36;1mOnly latest 4 backup files are kept\e[0m"
-		
-		#sync local backups to gdrive (older gdrive copies will be deleted)
-		rclone sync -P ./LMDSBackups --include "/LMDSbackup*"  gdrive:/LMDSBackups/ >> null
-		echo "\e[35;1m Sync with Google Drive complete\e[0m"
+        #sync local backups to gdrive (older gdrive copies will be deleted)
+        rclone sync -P ./LMDSBackups --include "/LMDSbackup*"  gdrive:/LMDSBackups/ >> /dev/null
+        echo -e "\e[36;1m    Sync with Google Drive \e[32;1msucessfull\e[0m"
+        echo -e "\e[32m======================================================\e[0m"
+
 	;;
 
 	"restore_rclone")
-	#add enable file for rclone
+# check if rclone is installed
+	if dpkg-query -W rclone | grep 'rclone' >> /dev/null ; then
+		echo "rclone already installed"
+
+		#create backup folder
 		[ -d ~/LMDS/LMDSBackups ] || sudo mkdir -p ~/LMDS/LMDSBackups/
-		
-		#sync gdrive to local 
-		rclone sync -P gdrive:/LMDSBackups/ --include "/LMDSbackup*" ./LMDSBackups 
-		echo "\e[35;1m Sync with Google Drive complete\e[0m"
+
+		#change permissions to pi
+		sudo chown pi:pi ~/LMDS/LMDSBackups
+
+		# resync from gdrive to ~/LMDS/LMDSBackups
+		rclone sync -P gdrive:/LMDSBackups/ --include "/LMDSbackup*" ./LMDSBackups
+
+		# stop all container
+		sudo docker stop $(docker ps -a -q)
+
+		# owerwrite all container
+		sudo tar -xzf ~/LMDS/LMDSBackups/"$(ls -t1 ~/LMDS/LMDSBackups/ | head -1)" -C ~/LMDS/
+
+		# start all containers from docker-comose/yml
+		docker-compose up -d
+
+	else
+		echo "Installing rclone first"
+		sudo apt install -y rclone
+		echo -e "Please run \e[32;1mrclone config\e[0m and create rclone (gdrive) backup destination"
+		echo "When gdrive is configured use Restore option again"
+fi
+
 
 
 	 ;;

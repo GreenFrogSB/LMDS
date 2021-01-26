@@ -192,21 +192,21 @@ case $mainmenu_selection in
 	#sudo apt update && sudo apt upgrade -y ;;
 
 	if command_exists docker; then
-		echo -e "\e[30;48;5;82mdocker already installed\e[0m"
+		echo -e "\e[30;48;5;82m    Docker already installed\e[0m"
 	else
-		echo -e "\e[33m;1mInstaling Docker - please wait\e[0m"
+		echo -e "\e[33;1m    Instaling Docker - please wait\e[0m"
 		curl -fsSL https://get.docker.com | sh &> /dev/null
 		sudo usermod -aG docker $USER &> /dev/null
-		echo -e "\e[32;1mDocker Installed\e[0m"
+		echo -e "\e[32;1m    Docker Installed\e[0m"
 
 	fi
 
 	if command_exists docker-compose; then
-		echo -e "\e[30;48;5;82mdocker-compose already installed\e[0m"
+		echo -e "\e[30;48;5;82m   Docker-compose already installed\e[0m"
 	else
-		echo -e "\e[33;1mInstaling docker-compose - please wait\e[0m"
+		echo -e "\e[33;1m    Instaling docker-compose - please wait\e[0m"
 		sudo apt install -y docker-compose &> /dev/null
-		echo -e "\e[32;1mDocker-compose Installed\e[0m"
+		echo -e "\e[32;1m    Docker-compose Installed\e[0m"
 	fi
 
 	if (whiptail --title "Restart Required" --yesno "It is recommended that you restart your device now. User (pi) was added to the (docker) user group for this to take effect logout and log back in or reboot. Select yes to do so now" 20 78); then
@@ -383,12 +383,12 @@ case $mainmenu_selection in
         ls -t1 ./LMDSBackups/LMDS* | tail -n +5 | sudo xargs rm -f
         echo -e "\e[36;1m    Backup files are saved in \e[34;1m~/LMDS/LMDSBackups/\e[0m"
         echo -e "\e[36;1m    Only recent 4 backup files are kept\e[0m"
-        echo -e "\e[36;1m    Syncing to Google Drive ... \e[0m"
 
 		# check if rclone is installed and gdrive: configured 
-	if dpkg-query -W rclone | grep -w 'rclone' >> /dev/null  && rclone listremotes | grep -w 'gdrive:' >> /dev/null ; then
+	if dpkg-query -W rclone 2>/dev/null | grep -w 'rclone' && rclone listremotes | grep -w 'gdrive:' >> /dev/null ; then
        
         #sync local backups to gdrive (older gdrive copies will be deleted)
+		echo -e "\e[36;1m    Syncing to Google Drive ... \e[0m"
         rclone sync -P ./LMDSBackups --include "/LMDSbackup*"  gdrive:/LMDSBackups/ > ./LMDSBackups/rclone_sync_log
         echo -e "\e[36;1m    Sync with Google Drive \e[32;1mdone\e[0m"
         echo -e "\e[32m==============================================================================\e[0m"

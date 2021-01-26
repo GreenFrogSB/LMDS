@@ -340,7 +340,7 @@ case $mainmenu_selection in
 	"rclone")
 		sudo apt install -y rclone
 		echo -e "\e[32m====================================================================================\e[0m"
-		echo -e "     Please run \e[32;1mrclone config\e[0m and create rclone \e[34;1m(gdrive\e[0m) backup destination   "
+		echo -e "     Please run \e[32;1mrclone config\e[0m and create rclone \e[34;1m(gdrive)\e[0m backup destination   "
 		echo -e "\e[32m=====================================================================================\e[0m"
 
 		#add enable file for rclone
@@ -373,13 +373,10 @@ case $mainmenu_selection in
         sudo chown pi:pi ./LMDSBackups/LMDS*
 
         #create local logfile and append the latest backup file to it
-        echo -e "\e[36;1m    Backup file created \e[32;1m $(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1 | grep -o 'LMDSbackup.*')e[0m"
+        echo -e "\e[36;1m    Backup file created \e[32;1m $(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1 | grep -o 'LMDSbackup.*')\e[0m"
         sudo touch $logfile
         sudo chown pi:pi $logfile
         echo $backupfile >>$logfile
-
-        #show size of archive file
-        # du -h ./LMDSBackups/$backupfile
 
         #remove older local backup files
         #to change backups retained,  change below +5 to whatever you want (days retained +1)
@@ -388,16 +385,24 @@ case $mainmenu_selection in
         echo -e "\e[36;1m    Only recent 4 backup files are kept\e[0m"
         echo -e "\e[36;1m    Synching to Google Drive ... \e[0m"
 
+	if dpkg-query -W rclone | grep -w 'rclone' >> /dev/null  && rclone listremotes | grep -w 'gdrive:' >> /dev/null ; then
+        restorefile="$(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1 | grep -o 'LMDSbackup.*')"
+
         #sync local backups to gdrive (older gdrive copies will be deleted)
         rclone sync -P ./LMDSBackups --include "/LMDSbackup*"  gdrive:/LMDSBackups/ > ./LMDSBackups/rclone_sync_log
         echo -e "\e[36;1m    Sync with Google Drive \e[32;1msucessfull\e[0m"
         echo -e "\e[32m==============================================================================\e[0m"
+	else
+
+        echo -e "\e[36;1m    rclone not installed or (gdrive) not configured \e[32;1mOnly local backup exist\e[0m"
+        echo -e "\e[32m==============================================================================\e[0m"
+	fi
 
 	;;
 
 	"restore_rclone")
 	# check if rclone is installed
-	if dpkg-query -W rclone | grep 'rclone' >> /dev/null ; then
+	if dpkg-query -W rclone | grep -w 'rclone' >> /dev/null  && rclone listremotes | grep -w 'gdrive:' >> /dev/null ; then
 		restorefile="$(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1 | grep -o 'LMDSbackup.*')"
     
 	    echo -e "\e[32m======================================================\e[0m"
@@ -429,15 +434,34 @@ case $mainmenu_selection in
 		echo -e "\e[36;1m    Restore completede\e[0m"
         echo -e "\e[32m======================================================\e[0m"
 
-
-
-
 	else
-		echo "Installing rclone first"
-		sudo apt install -y rclone
-		echo -e "Please run \e[32;1mrclone config\e[0m and create rclone (gdrive) backup destination"
-		echo "When gdrive is configured use Restore option again"
-fi
+		echo -e "\e[32m======================================================\e[0m"
+		echo -e "\e[36;1m    rclone not installed or (gdrive) not configured \e[32;1mchecking local backup\e[0m"
+        echo -e "\e[32m======================================================\e[0m"
+
+		if [ ! -f  ~/LMDS/LMDSBackups/LMDS* ]; then
+    		echo "NO LOCAL BACKUP FILES FOUND!!!"
+	fi
+		# local files restore
+		echo "\e[36;1m    Local backup found \e[32;1mrecovering from local backup\e[0m"
+
+		# stop all container
+		echo -e "   \e[36;1m Stopping all containers\e[0m"
+		sudo docker stop $(docker ps -a -q) 
+
+		# owerwrite all container
+		echo -e "   \e[36;1m Restoring all containers from backup\e[0m"
+		sudo tar -xzf "$(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1)" -C ~/LMDS/
+
+		# start all containers from docker-comose/yml
+		echo -e "   \e[36;1m Starting all containers\e[0m"
+		docker-compose up -d
+
+	    echo -e "\e[32m======================================================\e[0m"
+		echo -e "\e[36;1m    Restore completede\e[0m"
+        echo -e "\e[32m======================================================\e[0m"
+
+	fi
 
 
 

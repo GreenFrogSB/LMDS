@@ -386,15 +386,14 @@ case $mainmenu_selection in
         echo -e "\e[36;1m    Synching to Google Drive ... \e[0m"
 
 	if dpkg-query -W rclone | grep -w 'rclone' >> /dev/null  && rclone listremotes | grep -w 'gdrive:' >> /dev/null ; then
-        restorefile="$(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1 | grep -o 'LMDSbackup.*')"
-
+       
         #sync local backups to gdrive (older gdrive copies will be deleted)
         rclone sync -P ./LMDSBackups --include "/LMDSbackup*"  gdrive:/LMDSBackups/ > ./LMDSBackups/rclone_sync_log
         echo -e "\e[36;1m    Sync with Google Drive \e[32;1msucessfull\e[0m"
         echo -e "\e[32m==============================================================================\e[0m"
 	else
 
-        echo -e "\e[36;1m    rclone not installed or (gdrive) not configured \e[32;1mOnly local backup exist\e[0m"
+        echo -e "\e[36;1m    rclone not installed or (gdrive) not configured \e[32;1mOnly local backup created\e[0m"
         echo -e "\e[32m==============================================================================\e[0m"
 	fi
 
@@ -403,21 +402,24 @@ case $mainmenu_selection in
 	"restore_rclone")
 	# check if rclone is installed
 	if dpkg-query -W rclone | grep -w 'rclone' >> /dev/null  && rclone listremotes | grep -w 'gdrive:' >> /dev/null ; then
-		restorefile="$(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1 | grep -o 'LMDSbackup.*')"
-    
-	    echo -e "\e[32m======================================================\e[0m"
-		echo -e "    Restoring \e[36;1m $restorefile\e[0m"
-        echo -e "\e[32m======================================================\e[0m"
-
-		#create backup folder
+		
+    	#create backup folder
 		[ -d ~/LMDS/LMDSBackups ] || sudo mkdir -p ~/LMDS/LMDSBackups/
 
 		#change permissions to pi
 		sudo chown pi:pi ~/LMDS/LMDSBackups
-
+		
 		# resync from gdrive to ~/LMDS/LMDSBackups
 		rclone sync -P gdrive:/LMDSBackups/ --include "/LMDSbackup*" ./LMDSBackups > ./LMDSBackups/rclone_sync_log
+	    
+		# no check if online - mayve some another time just assume it is online 
+		echo -e "\e[32m======================================================\e[0m"
+		echo -e "    Sync with Google Drive \e[32;1msucessfull\e[0m"
 
+		# check for recent backup file 
+	 	restorefile="$(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1 | grep -o 'LMDSbackup.*')"
+		echo -e "    Restoring \e[36;1m $restorefile\e[0m"
+ 
 		# stop all container
 		echo -e "   \e[36;1m Stopping all containers\e[0m"
 		sudo docker stop $(docker ps -a -q) 
@@ -430,40 +432,36 @@ case $mainmenu_selection in
 		echo -e "   \e[36;1m Starting all containers\e[0m"
 		docker-compose up -d
 
-	    echo -e "\e[32m======================================================\e[0m"
 		echo -e "\e[36;1m    Restore completede\e[0m"
         echo -e "\e[32m======================================================\e[0m"
 
 	else
 		echo -e "\e[32m======================================================\e[0m"
 		echo -e "\e[36;1m    rclone not installed or (gdrive) not configured \e[32;1mchecking local backup\e[0m"
-        echo -e "\e[32m======================================================\e[0m"
+
 
 		if [ ! -f  ~/LMDS/LMDSBackups/LMDS* ]; then
-    		echo "NO LOCAL BACKUP FILES FOUND!!!"
+    		echo -e "\e[41m    NO LOCAL BACKUP FILES FOUND!!!    \e[0m"
 	fi
 		# local files restore
-		echo "\e[36;1m    Local backup found \e[32;1mrecovering from local backup\e[0m"
+		echo "\e[36;1m    Local backup found \e[32;1mrestoring from local backup\e[0m"
 
 		# stop all container
 		echo -e "   \e[36;1m Stopping all containers\e[0m"
 		sudo docker stop $(docker ps -a -q) 
 
 		# owerwrite all container
-		echo -e "   \e[36;1m Restoring all containers from backup\e[0m"
+		echo -e "   \e[36;1m Restoring all containers from local backup\e[0m"
 		sudo tar -xzf "$(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1)" -C ~/LMDS/
 
 		# start all containers from docker-comose/yml
 		echo -e "   \e[36;1m Starting all containers\e[0m"
 		docker-compose up -d
 
-	    echo -e "\e[32m======================================================\e[0m"
 		echo -e "\e[36;1m    Restore completede\e[0m"
         echo -e "\e[32m======================================================\e[0m"
 
 	fi
-
-
 
 	 ;;
 

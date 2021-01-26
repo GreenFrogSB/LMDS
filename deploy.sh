@@ -464,7 +464,9 @@ case $mainmenu_selection in
 			echo -e "\e[36;1m    Restore completed \e[0m"
      		echo -e "\e[32m=====================================================================================\e[0m"
 		else
-    			echo -e "    \e[41m    NO LOCAL BACKUP FILES FOUND!!!    \e[0m"
+		        echo -e "            \e[41m    ==============================    \e[0m"
+    			echo -e "            \e[41m    NO LOCAL BACKUP FILES FOUND!!!    \e[0m"
+				echo -e "            \e[41m    ==============================    \e[0m"
 		fi
 
 	fi

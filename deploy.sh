@@ -385,6 +385,7 @@ case $mainmenu_selection in
         echo -e "\e[36;1m    Only recent 4 backup files are kept\e[0m"
         echo -e "\e[36;1m    Synching to Google Drive ... \e[0m"
 
+		# check if rclone is installed and gdrive: configured 
 	if dpkg-query -W rclone | grep -w 'rclone' >> /dev/null  && rclone listremotes | grep -w 'gdrive:' >> /dev/null ; then
        
         #sync local backups to gdrive (older gdrive copies will be deleted)
@@ -400,7 +401,7 @@ case $mainmenu_selection in
 	;;
 
 	"restore_rclone")
-	# check if rclone is installed
+	# check if rclone is installed and gdrive: configured 
 	if dpkg-query -W rclone | grep -w 'rclone' >> /dev/null  && rclone listremotes | grep -w 'gdrive:' >> /dev/null ; then
 		
     	#create backup folder
@@ -414,35 +415,36 @@ case $mainmenu_selection in
 	    
 		# no check if online - mayve some another time just assume it is online 
 		echo -e "\e[32m======================================================\e[0m"
-		echo -e "    Sync with Google Drive \e[32;1msucessfull\e[0m"
+		echo -e "\e[36m    Sync with Google Drive \e[32;1msucessfull\e[0m"
 
 		# check for recent backup file 
 	 	restorefile="$(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1 | grep -o 'LMDSbackup.*')"
-		echo -e "    Restoring \e[36;1m $restorefile\e[0m"
+		echo -e "\e[36m    Restoring \e[32;1m $restorefile\e[0m"
  
 		# stop all container
-		echo -e "   \e[36;1m Stopping all containers\e[0m"
+		echo -e "\e[36;1m    Stopping all containers\e[0m"
 		sudo docker stop $(docker ps -a -q) 
 
 		# owerwrite all container
-		echo -e "   \e[36;1m Restoring all containers from backup\e[0m"
+		echo -e "\e[36;1m    Restoring all containers from backup\e[0m"
 		sudo tar -xzf "$(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1)" -C ~/LMDS/
 
 		# start all containers from docker-comose/yml
-		echo -e "   \e[36;1m Starting all containers\e[0m"
+		echo -e "\e[36;1m     Starting all containers\e[0m"
 		docker-compose up -d
 
-		echo -e "\e[36;1m    Restore completede\e[0m"
+		sleep 7
+		echo -e "\e[36;1m    Restore completed\e[0m"
         echo -e "\e[32m======================================================\e[0m"
 
 	else
 		echo -e "\e[32m======================================================\e[0m"
 		echo -e "\e[36;1m    rclone not installed or (gdrive) not configured \e[32;1mchecking local backup\e[0m"
 
+			if [ ! -f  ~/LMDS/LMDSBackups/LMDS* ]; then
+    			echo -e "\e[41m    NO LOCAL BACKUP FILES FOUND!!!    \e[0m"
+			fi
 
-		if [ ! -f  ~/LMDS/LMDSBackups/LMDS* ]; then
-    		echo -e "\e[41m    NO LOCAL BACKUP FILES FOUND!!!    \e[0m"
-	fi
 		# local files restore
 		echo "\e[36;1m    Local backup found \e[32;1mrestoring from local backup\e[0m"
 
@@ -458,11 +460,10 @@ case $mainmenu_selection in
 		echo -e "   \e[36;1m Starting all containers\e[0m"
 		docker-compose up -d
 
-		echo -e "\e[36;1m    Restore completede\e[0m"
+		sleep 7
+		echo -e "\e[36;1m    Restore completed \e[0m"
         echo -e "\e[32m======================================================\e[0m"
-
 	fi
-
 	 ;;
 
 	esac

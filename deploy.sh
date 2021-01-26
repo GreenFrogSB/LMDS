@@ -396,7 +396,7 @@ case $mainmenu_selection in
         echo -e "\e[32m==============================================================================\e[0m"
 	else
 
-        echo -e "\e[36;1m    \e[34;1mrclone\e[0m not installed or \e[34;1m(gdrive)\e[0m not configured \e[32;1mOnly local backup created\e[0m"
+        echo -e "\e[36;1m    \e[34;1mrclone\e[0m\e[36;1m not installed or \e[34;1m(gdrive)\e[0m\e[36;1m not configured \e[32;1monly local backup created\e[0m"
         echo -e "\e[32m==============================================================================\e[0m"
 	fi
 
@@ -404,7 +404,7 @@ case $mainmenu_selection in
 
 	"restore_rclone")
 	# check if rclone is installed and gdrive: configured 
-	if dpkg-query -W rclone | grep -w 'rclone' >> /dev/null  && rclone listremotes | grep -w 'gdrive:' >> /dev/null ; then
+	if dpkg-query -W rclone 2>/dev/null | grep -w 'rclone' && rclone listremotes | grep -w 'gdrive:' >> /dev/null ; then
 		
     	#create backup folder
 		[ -d ~/LMDS/LMDSBackups ] || sudo mkdir -p ~/LMDS/LMDSBackups/
@@ -443,7 +443,7 @@ case $mainmenu_selection in
 		echo -e "\e[32m=====================================================================================\e[0m"
 		echo -e "\e[36;1m    \e[34;1mrclone\e[0m\e[36;1m not installed or \e[34;1m(gdrive)\e[0m\e[36;1m not configured \e[32;1mchecking local backup\e[0m"
 
-		if ls ~/LMDS/LMDSBackups/ | grep -w 'LMDSbackup-2' ; then
+		if ls ~/LMDS/LMDSBackups/ | grep -w 'LMDSbackup' >> /dev/null ; then
 
 			# local files restore
 			echo -e "\e[36;1m    Local backup found \e[32;1m"$(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1)"\e[0m"
@@ -464,9 +464,11 @@ case $mainmenu_selection in
 			echo -e "\e[36;1m    Restore completed \e[0m"
      		echo -e "\e[32m=====================================================================================\e[0m"
 		else
+		        echo -e "                                                             "
 		        echo -e "            \e[41m    ==============================    \e[0m"
     			echo -e "            \e[41m    NO LOCAL BACKUP FILES FOUND!!!    \e[0m"
 				echo -e "            \e[41m    ==============================    \e[0m"
+				echo -e "                                                             "
 		fi
 
 	fi

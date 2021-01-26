@@ -359,7 +359,7 @@ case $mainmenu_selection in
 
         #setup variables
         logfile=./LMDSBackups/log_local.txt
-        backupfile="LMDSbackup-$(date +"%Y-%m-%d_%H:%M").tar.gz"
+        backupfile="LMDSbackup-$(date +"%Y-%m-%d_%H-%M").tar.gz"
 
         #compress the backups folders to archive
         echo -e "\e[32m==============================================================================\e[0m"
@@ -386,7 +386,9 @@ case $mainmenu_selection in
 
 		# check if rclone is installed and gdrive: configured 
 	if dpkg-query -W rclone 2>/dev/null | grep -w 'rclone' && rclone listremotes | grep -w 'gdrive:' >> /dev/null ; then
-       
+       ls -l 
+	   ls -l 
+
         #sync local backups to gdrive (older gdrive copies will be deleted)
 		echo -e "\e[36;1m    Syncing to Google Drive ... \e[0m"
         rclone sync -P ./LMDSBackups --include "/LMDSbackup*"  gdrive:/LMDSBackups/ > ./LMDSBackups/rclone_sync_log
@@ -394,7 +396,7 @@ case $mainmenu_selection in
         echo -e "\e[32m==============================================================================\e[0m"
 	else
 
-        echo -e "\e[36;1m    rclone not installed or (gdrive) not configured \e[32;1mOnly local backup created\e[0m"
+        echo -e "\e[36;1m    \e[34;1mrclone\e[0m not installed or \e[34;1m(gdrive)\e[0m not configured \e[32;1mOnly local backup created\e[0m"
         echo -e "\e[32m==============================================================================\e[0m"
 	fi
 
@@ -414,7 +416,7 @@ case $mainmenu_selection in
 		rclone sync -P gdrive:/LMDSBackups/ --include "/LMDSbackup*" ./LMDSBackups > ./LMDSBackups/rclone_sync_log
 	    
 		# no check if online - mayve some another time just assume it is online 
-		echo -e "\e[32m======================================================\e[0m"
+		echo -e "\e[32m=====================================================================================\e[0m"
 		echo -e "\e[36;1m    Sync with Google Drive \e[32;1msucessfull\e[0m"
 
 		# check for recent backup file 
@@ -439,14 +441,14 @@ case $mainmenu_selection in
 
 	else
 		echo -e "\e[32m======================================================\e[0m"
-		echo -e "\e[36;1m    rclone not installed or (gdrive) not configured \e[32;1mchecking local backup\e[0m"
+		echo -e "\e[36;1m    \e[34;1mrclone\e[0m not installed or \e[34;1m(gdrive)\e[0m not configured \e[32;1mchecking local backup\e[0m"
 
-			if [ ! -f  ~/LMDS/LMDSBackups/LMDS* ]; then
-    			echo -e "\e[41m    NO LOCAL BACKUP FILES FOUND!!!    \e[0m"
+			if [ -e '~/LMDS/LMDSBackups/LMDS*' ] ; then
+    			echo -e "    \e[41m    NO LOCAL BACKUP FILES FOUND!!!    \e[0m"
 			fi
 
 		# local files restore
-		echo "\e[36;1m    Local backup found \e[32;1mrestoring from local backup\e[0m"
+		echo -e "\e[36;1m    Local backup found \e[32;1m"$(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1)"\e[0m"
 
 		# stop all container
 		echo -e "\e[36;1m    Stopping all containers\e[0m"
@@ -462,7 +464,7 @@ case $mainmenu_selection in
 
 		sleep 7
 		echo -e "\e[36;1m    Restore completed \e[0m"
-        echo -e "\e[32m======================================================\e[0m"
+        echo -e "\e[32m=====================================================================================\e[0m"
 	fi
 	 ;;
 

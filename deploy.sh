@@ -155,8 +155,8 @@ function yml_builder() {
 
 #---------------------------------------------------------------------------------------------------
 # Project updates
-echo "checking for project update"
-git fetch origin main
+echo "Checking for project update"
+# git fetch origin main
 
 if [ $(git status | grep -c "Your branch is up to date") -eq 1 ]; then
 	#delete .outofdate if it exisist
@@ -340,7 +340,7 @@ case $mainmenu_selection in
 	"rclone")
 		sudo apt install -y rclone
 		echo -e "\e[32m====================================================================================\e[0m"
-		echo -e "     Please run \e[32;1mrclone config\e[0m and create rclone \e[34;1m(gdrive)\e[0m backup destination   "
+		echo -e "     Please run \e[32;1mrclone config\e[0m and create remote \e[34;1m(gdrive)\e[0m for backup   "
 		echo -e "\e[32m=====================================================================================\e[0m"
 
 		#add enable file for rclone
@@ -381,16 +381,16 @@ case $mainmenu_selection in
         #remove older local backup files
         #to change backups retained,  change below +5 to whatever you want (days retained +1)
         ls -t1 ./LMDSBackups/LMDS* | tail -n +5 | sudo xargs rm -f
-        echo -e "\e[36;1m    Backup files are saved in \e[37;3m~/LMDSBackups/\e[0m"
+        echo -e "\e[36;1m    Backup files are saved in \e[34;1m~/LMDS/LMDSBackups/\e[0m"
         echo -e "\e[36;1m    Only recent 4 backup files are kept\e[0m"
-        echo -e "\e[36;1m    Synching to Google Drive ... \e[0m"
+        echo -e "\e[36;1m    Syncing to Google Drive ... \e[0m"
 
 		# check if rclone is installed and gdrive: configured 
 	if dpkg-query -W rclone | grep -w 'rclone' >> /dev/null  && rclone listremotes | grep -w 'gdrive:' >> /dev/null ; then
        
         #sync local backups to gdrive (older gdrive copies will be deleted)
         rclone sync -P ./LMDSBackups --include "/LMDSbackup*"  gdrive:/LMDSBackups/ > ./LMDSBackups/rclone_sync_log
-        echo -e "\e[36;1m    Sync with Google Drive \e[32;1msucessfull\e[0m"
+        echo -e "\e[36;1m    Sync with Google Drive \e[32;1mdone\e[0m"
         echo -e "\e[32m==============================================================================\e[0m"
 	else
 
@@ -415,11 +415,11 @@ case $mainmenu_selection in
 	    
 		# no check if online - mayve some another time just assume it is online 
 		echo -e "\e[32m======================================================\e[0m"
-		echo -e "\e[36m    Sync with Google Drive \e[32;1msucessfull\e[0m"
+		echo -e "\e[36m;1m    Sync with Google Drive \e[32;1msucessfull\e[0m"
 
 		# check for recent backup file 
 	 	restorefile="$(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1 | grep -o 'LMDSbackup.*')"
-		echo -e "\e[36m    Restoring \e[32;1m $restorefile\e[0m"
+		echo -e "\e[36m;1m    Restoring \e[32;1m $restorefile\e[0m"
  
 		# stop all container
 		echo -e "\e[36;1m    Stopping all containers\e[0m"
@@ -430,7 +430,7 @@ case $mainmenu_selection in
 		sudo tar -xzf "$(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1)" -C ~/LMDS/
 
 		# start all containers from docker-comose/yml
-		echo -e "\e[36;1m     Starting all containers\e[0m"
+		echo -e "\e[36;1m    Starting all containers\e[0m"
 		docker-compose up -d
 
 		sleep 7

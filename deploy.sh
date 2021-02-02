@@ -450,17 +450,17 @@ case $mainmenu_selection in
 
 			# stop all container
 			echo -e "\e[36;1m    Stopping all containers\e[0m"
-			#sudo docker stop $(docker ps -a -q) 
+			sudo docker stop $(docker ps -a -q) 
 
 			# owerwrite all container
 			echo -e "\e[36;1m    Restoring all containers from local backup\e[0m"
-			#sudo tar -xzf "$(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1)" -C ~/LMDS/
+			sudo tar -xzf "$(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1)" -C ~/LMDS/
 
 			# start all containers from docker-comose/yml
 			echo -e "\e[36;1m    Starting all containers\e[0m"
-			#docker-compose up -d
+			docker-compose up -d
 
-			#sleep 7
+			sleep 7
 			echo -e "\e[36;1m    Restore completed \e[0m"
      		echo -e "\e[32m=====================================================================================\e[0m"
 		else
@@ -469,6 +469,7 @@ case $mainmenu_selection in
     			echo -e "            \e[41m    NO LOCAL BACKUP FILES FOUND!!!    \e[0m"
 				echo -e "            \e[41m    ==============================    \e[0m"
 				echo -e "                                                             "
+			echo -e "\e[32m=====================================================================================\e[0m"
 		fi
 
 	fi

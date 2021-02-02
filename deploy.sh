@@ -356,7 +356,7 @@ case $mainmenu_selection in
 		#add enable file for rclone
 		[ -d ~/LMDS/LMDSBackups ] || sudo mkdir -p ~/LMDS/LMDSBackups/
 		sudo chown pi:pi -R ~/LMDS/LMDSBackups
-		
+
 		#create the list of files to backup
         echo "./docker-compose.yml" >list.txt
         echo "./services/" >>list.txt
@@ -390,7 +390,7 @@ case $mainmenu_selection in
         echo -e "\e[36;1m    Only recent 4 backup files are kept\e[0m"
 
 		# check if rclone is installed and gdrive: configured 
-	if dpkg-query -W rclone 2>/dev/null | grep -w 'rclone' && rclone listremotes | grep -w 'gdrive:' >> /dev/null ; then
+	if dpkg-query -W rclone | grep -w 'rclone' >> /dev/null && rclone listremotes | grep -w 'gdrive:' >> /dev/null ; then
 
         #sync local backups to gdrive (older gdrive copies will be deleted)
 		echo -e "\e[36;1m    Syncing to Google Drive ... \e[0m"

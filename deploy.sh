@@ -339,18 +339,23 @@ case $mainmenu_selection in
 	case $backup_selection in
 	"rclone")
 		sudo apt install -y rclone
-		echo -e "\e[32m====================================================================================\e[0m"
-		echo -e "     Please run \e[32;1mrclone config\e[0m and create remote \e[34;1m(gdrive)\e[0m for backup   "
-		echo -e "\e[32m=====================================================================================\e[0m"
+			echo -e "\e[32m====================================================================================\e[0m"
+			echo -e "     Please run \e[32;1mrclone config\e[0m and create remote \e[34;1m(gdrive)\e[0m for backup   "
+			echo -e "     "
+			echo -e "     Do as folows:"
+			echo -e "      [n] [gdive] [12] [Enter] [Enter] [1] [Enter] [Enter] [n] [n]"
+			echo -e "      [Copy link from SSH console and paste it into the browser]"
+			echo -e "      [Login to your google account]"
+			echo -e "      [Copy token from Google and paste it into the SSH console]"
+			echo -e "      [n] [y] [q]"
+			echo -e "\e[32m=====================================================================================\e[0m"
 
-		#add enable file for rclone
-		[ -d ~/LMDS/LMDSBackups ] || sudo mkdir -p ~/LMDS/LMDSBackups/
-		# sudo touch ~/LMDS/LMDSBackups/rclone
 		;;
 
 	"backup_rclone") 
 		#add enable file for rclone
 		[ -d ~/LMDS/LMDSBackups ] || sudo mkdir -p ~/LMDS/LMDSBackups/
+		sudo chown pi:pi -R ~/LMDS/LMDSBackups
 		
 		#create the list of files to backup
         echo "./docker-compose.yml" >list.txt
@@ -386,8 +391,6 @@ case $mainmenu_selection in
 
 		# check if rclone is installed and gdrive: configured 
 	if dpkg-query -W rclone 2>/dev/null | grep -w 'rclone' && rclone listremotes | grep -w 'gdrive:' >> /dev/null ; then
-       ls -l 
-	   ls -l 
 
         #sync local backups to gdrive (older gdrive copies will be deleted)
 		echo -e "\e[36;1m    Syncing to Google Drive ... \e[0m"

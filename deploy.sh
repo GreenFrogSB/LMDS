@@ -337,6 +337,12 @@ case $mainmenu_selection in
 
 	case $backup_selection in
 	"rclone") 
+    if dpkg-query -W rclone | grep -w 'rclone' >> /dev/null && rclone listremotes | grep -w 'gdrive:' >> /dev/null ; then
+
+        #rclone installed and gdrive exist
+		echo -e "\e[36;1m    rclone installed and gdrive configured, go to Backup or Restore \e[0m"
+        echo -e "\e[32m==============================================================================\e[0m"
+	else
 		sudo apt install -y rclone
 			echo -e "\e[32m====================================================================================\e[0m"
 			echo -e "     Please run \e[32;1mrclone config\e[0m and create remote \e[34;1m(gdrive)\e[0m for backup   "
@@ -348,6 +354,7 @@ case $mainmenu_selection in
 			echo -e "      [Copy token from Google and paste it into the SSH console]"
 			echo -e "      [n] [y] [q]"
 			echo -e "\e[32m=====================================================================================\e[0m"
+	fi
 		;;
 
 	"rclone_backup") ./scripts/rclone_backup.sh ;;

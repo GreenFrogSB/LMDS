@@ -12,7 +12,7 @@
         backupfile="LMDSbackup-$(date +"%Y-%m-%d_%H-%M").tar.gz"
 
         #compress the backups folders to archive
-        echo -e "\e[32m==============================================================================\e[0m"
+        echo -e "\e[32m=====================================================================================\e[0m"
         echo -e "\e[36;1m    Creating backup file ... \e[0m"
                         sudo tar -czf \
                         ./LMDSBackups/$backupfile \
@@ -41,9 +41,9 @@
 		echo -e "\e[36;1m    Syncing to Google Drive ... \e[0m"
         rclone sync -P ./LMDSBackups --include "/LMDSbackup*"  gdrive:/LMDSBackups/ > ./LMDSBackups/rclone_sync_log
         echo -e "\e[36;1m    Sync with Google Drive \e[32;1mdone\e[0m"
-        echo -e "\e[32m==============================================================================\e[0m"
+        echo -e "\e[32m=====================================================================================\e[0m"
 	else
 
         echo -e "\e[36;1m    \e[34;1mrclone\e[0m\e[36;1m not installed or \e[34;1m(gdrive)\e[0m\e[36;1m not configured \e[32;1monly local backup created\e[0m"
-        echo -e "\e[32m==============================================================================\e[0m"
+        echo -e "\e[32m=====================================================================================\e[0m"
 	fi

@@ -66,11 +66,11 @@ timezones() {
 docker_setfacl() {
 	[ -d ./services ] || mkdir ./services
 	[ -d ./volumes ] || mkdir ./volumes
-	[ -d ./backups ] || mkdir ./backups
+	[ -d ./LMDSBackups ] || mkdir ./LMDSBackups
 
 	#give current user rwx on the volumes and backups
 	[ $(getfacl ./volumes | grep -c "default:user:$USER") -eq 0 ] && sudo setfacl -Rdm u:$USER:rwx ./volumes
-	[ $(getfacl ./backups | grep -c "default:user:$USER") -eq 0 ] && sudo setfacl -Rdm u:$USER:rwx ./backups
+	[ $(getfacl ./LMDSBackups | grep -c "default:user:$USER") -eq 0 ] && sudo setfacl -Rdm u:$USER:rwx ./LMDSBackups
 }
 
 #future function add password in build phase
@@ -335,9 +335,8 @@ case $mainmenu_selection in
 			3>&1 1>&2 2>&3
 	)
 
-
 	case $backup_selection in
-	"rclone")
+	"rclone") 
 		sudo apt install -y rclone
 			echo -e "\e[32m====================================================================================\e[0m"
 			echo -e "     Please run \e[32;1mrclone config\e[0m and create remote \e[34;1m(gdrive)\e[0m for backup   "
@@ -349,134 +348,10 @@ case $mainmenu_selection in
 			echo -e "      [Copy token from Google and paste it into the SSH console]"
 			echo -e "      [n] [y] [q]"
 			echo -e "\e[32m=====================================================================================\e[0m"
-
 		;;
 
-	"backup_rclone") 
-		#add enable file for rclone
-		[ -d ~/LMDS/LMDSBackups ] || sudo mkdir -p ~/LMDS/LMDSBackups/
-		sudo chown pi:pi -R ~/LMDS/LMDSBackups
-
-		#create the list of files to backup
-        echo "./docker-compose.yml" >list.txt
-        echo "./services/" >>list.txt
-        echo "./volumes/" >>list.txt
-
-        #setup variables
-        logfile=./LMDSBackups/log_local.txt
-        backupfile="LMDSbackup-$(date +"%Y-%m-%d_%H-%M").tar.gz"
-
-        #compress the backups folders to archive
-        echo -e "\e[32m==============================================================================\e[0m"
-        echo -e "\e[36;1m    Creating backup file ... \e[0m"
-                        sudo tar -czf \
-                        ./LMDSBackups/$backupfile \
-                        -T list.txt
-                        rm list.txt
-
-        #set permission for backup files
-        sudo chown pi:pi ./LMDSBackups/LMDS*
-
-        #create local logfile and append the latest backup file to it
-        echo -e "\e[36;1m    Backup file created \e[32;1m $(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1 | grep -o 'LMDSbackup.*')\e[0m"
-        sudo touch $logfile
-        sudo chown pi:pi $logfile
-        echo $backupfile >>$logfile
-
-        #remove older local backup files
-        #to change backups retained,  change below +5 to whatever you want (days retained +1)
-        ls -t1 ./LMDSBackups/LMDS* | tail -n +5 | sudo xargs rm -f
-        echo -e "\e[36;1m    Backup files are saved in \e[34;1m~/LMDS/LMDSBackups/\e[0m"
-        echo -e "\e[36;1m    Only recent 4 backup files are kept\e[0m"
-
-		# check if rclone is installed and gdrive: configured 
-	if dpkg-query -W rclone | grep -w 'rclone' >> /dev/null && rclone listremotes | grep -w 'gdrive:' >> /dev/null ; then
-
-        #sync local backups to gdrive (older gdrive copies will be deleted)
-		echo -e "\e[36;1m    Syncing to Google Drive ... \e[0m"
-        rclone sync -P ./LMDSBackups --include "/LMDSbackup*"  gdrive:/LMDSBackups/ > ./LMDSBackups/rclone_sync_log
-        echo -e "\e[36;1m    Sync with Google Drive \e[32;1mdone\e[0m"
-        echo -e "\e[32m==============================================================================\e[0m"
-	else
-
-        echo -e "\e[36;1m    \e[34;1mrclone\e[0m\e[36;1m not installed or \e[34;1m(gdrive)\e[0m\e[36;1m not configured \e[32;1monly local backup created\e[0m"
-        echo -e "\e[32m==============================================================================\e[0m"
-	fi
-
-	;;
-
-	"restore_rclone")
-	# check if rclone is installed and gdrive: configured 
-	if dpkg-query -W rclone | grep -w 'rclone' >> /dev/null && rclone listremotes | grep -w 'gdrive:' >> /dev/null ; then
-		
-    	#create backup folder
-		[ -d ~/LMDS/LMDSBackups ] || sudo mkdir -p ~/LMDS/LMDSBackups/
-
-		#change permissions to pi
-		sudo chown pi:pi ~/LMDS/LMDSBackups
-		
-		# resync from gdrive to ~/LMDS/LMDSBackups
-		rclone sync -P gdrive:/LMDSBackups/ --include "/LMDSbackup*" ./LMDSBackups > ./LMDSBackups/rclone_sync_log
-	    
-		# no check if online - mayve some another time just assume it is online 
-		echo -e "\e[32m=====================================================================================\e[0m"
-		echo -e "\e[36;1m    Sync with Google Drive \e[32;1msucessfull\e[0m"
-
-		# check for recent backup file 
-	 	restorefile="$(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1 | grep -o 'LMDSbackup.*')"
-		echo -e "\e[36;1m    Restoring \e[32;1m $restorefile\e[0m"
- 
-		# stop all container
-		echo -e "\e[36;1m    Stopping all containers\e[0m"
-		sudo docker stop $(docker ps -a -q) 
-
-		# owerwrite all container
-		echo -e "\e[36;1m    Restoring all containers from backup\e[0m"
-		sudo tar -xzf "$(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1)" -C ~/LMDS/
-
-		# start all containers from docker-comose/yml
-		echo -e "\e[36;1m    Starting all containers\e[0m"
-		docker-compose up -d
-
-		sleep 7
-		echo -e "\e[36;1m    Restore completed\e[0m"
-        echo -e "\e[32m=====================================================================================\e[0m"
-
-	else
-		echo -e "\e[32m=====================================================================================\e[0m"
-		echo -e "\e[36;1m    \e[34;1mrclone\e[0m\e[36;1m not installed or \e[34;1m(gdrive)\e[0m\e[36;1m not configured \e[32;1mchecking local backup\e[0m"
-
-		if ls ~/LMDS/LMDSBackups/ | grep -w 'LMDSbackup' >> /dev/null ; then
-
-			# local files restore
-			echo -e "\e[36;1m    Local backup found \e[32;1m"$(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1)"\e[0m"
-
-			# stop all container
-			echo -e "\e[36;1m    Stopping all containers\e[0m"
-			sudo docker stop $(docker ps -a -q) 
-
-			# owerwrite all container
-			echo -e "\e[36;1m    Restoring all containers from local backup\e[0m"
-			sudo tar -xzf "$(ls -t1 ~/LMDS/LMDSBackups/LMDS* | head -1)" -C ~/LMDS/
-
-			# start all containers from docker-comose/yml
-			echo -e "\e[36;1m    Starting all containers\e[0m"
-			docker-compose up -d
-
-			sleep 7
-			echo -e "\e[36;1m    Restore completed \e[0m"
-     		echo -e "\e[32m=====================================================================================\e[0m"
-		else
-		        echo -e "                                                             "
-		        echo -e "            \e[41m    ==============================    \e[0m"
-    			echo -e "            \e[41m    NO LOCAL BACKUP FILES FOUND!!!    \e[0m"
-				echo -e "            \e[41m    ==============================    \e[0m"
-				echo -e "                                                             "
-			echo -e "\e[32m=====================================================================================\e[0m"
-		fi
-
-	fi
-	 ;;
+	"backup_rclone") ./scripts/backup_rclone.sh ;;
+	"restore_rclone") ./scripts/restore_rclone.sh ;;
 
 	esac
 	;;

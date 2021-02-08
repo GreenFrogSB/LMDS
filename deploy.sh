@@ -330,8 +330,8 @@ case $mainmenu_selection in
 		whiptail --title "Backup and Restore LMDS" --menu --notags \
 			"While configuring rclone to work with Google Drive (option 12), make sure you give a folder name of (gdrive). Be carefull when you restore from backup. All containers will be stop and their settings overwritten with what is in your last backup file. All containers will start automatically after restore is done." 20 78 12 -- \
 			"rclone" "Install rclone and configure (gdrive) for backup" \
-			"backup_rclone" "Backup LMDS" \
-			"restore_rclone" "Restore LMDS" \
+			"rclone_backup" "Backup LMDS" \
+			"rclone_restore" "Restore LMDS" \
 			3>&1 1>&2 2>&3
 	)
 
@@ -350,8 +350,8 @@ case $mainmenu_selection in
 			echo -e "\e[32m=====================================================================================\e[0m"
 		;;
 
-	"backup_rclone") ./scripts/backup_rclone.sh ;;
-	"restore_rclone") ./scripts/restore_rclone.sh ;;
+	"rclone_backup") ./scripts/rclone_backup.sh ;;
+	"rclone_restore") ./scripts/rclone_restore.sh ;;
 
 	esac
 	;;

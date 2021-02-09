@@ -192,8 +192,11 @@ case $mainmenu_selection in
 	#sudo apt update && sudo apt upgrade -y ;;
 
 	if command_exists docker; then
+		echo -e "     "
 		echo -e "\e[30;48;5;82m    Docker already installed\e[0m"
 	else
+
+		echo -e "     "
 		echo -e "\e[33;1m    Instaling Docker - please wait\e[0m"
 		curl -fsSL https://get.docker.com | sh &> /dev/null
 		sudo usermod -aG docker $USER &> /dev/null
@@ -207,6 +210,7 @@ case $mainmenu_selection in
 		echo -e "\e[33;1m    Instaling docker-compose - please wait\e[0m"
 		sudo apt install -y docker-compose &> /dev/null
 		echo -e "\e[32;1m    Docker-compose Installed\e[0m"
+		echo -e "     "
 	fi
 
 	if (whiptail --title "Restart Required" --yesno "It is recommended that you restart your device now. User (pi) was added to the (docker) user group for this to take effect logout and log back in or reboot. Select yes to do so now" 20 78); then

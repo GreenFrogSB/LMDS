@@ -2,6 +2,8 @@
 		[ -d ~/LMDS/LMDSBackups ] || sudo mkdir -p ~/LMDS/LMDSBackups/
 		sudo chown pi:pi -R ~/LMDS/LMDSBackups
 
+    if ls ~/LMDS/ | grep -w 'docker-compose.yml' >> /dev/null ; then
+
 		#create the list of files to backup
         echo "./docker-compose.yml" >list.txt
         echo "./services/" >>list.txt
@@ -47,3 +49,13 @@
         echo -e "\e[36;1m    \e[34;1mrclone\e[0m\e[36;1m not installed or \e[34;1m(gdrive)\e[0m\e[36;1m not configured \e[32;1monly local backup created\e[0m"
         echo -e "\e[32m=====================================================================================\e[0m"
 	fi
+
+else
+		        echo -e "                                                             "
+		        echo -e "            \e[41m    =============================   \e[0m"
+    			echo -e "            \e[41m     Containers not deployed yet    \e[0m"
+               	echo -e "            \e[41m          Nothing to backup         \e[0m"
+				echo -e "            \e[41m    =============================   \e[0m"
+				echo -e "                                                             "
+			echo -e "\e[32m=====================================================================================\e[0m"
+		fi

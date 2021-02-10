@@ -345,7 +345,7 @@ case $mainmenu_selection in
 
         #rclone installed and gdrive exist
 			echo -e "\e[32m=====================================================================================\e[0m"
-			echo -e "\e[36;1m    rclone installed and gdrive configured, go to Backup or Restore \e[0m"
+			echo -e "\e[36;1m    rclone installed and gdrive configured, go to Backup or Restore \e[0m" 
    		    echo -e "\e[32m=====================================================================================\e[0m"
 	else
 		sudo apt install -y rclone

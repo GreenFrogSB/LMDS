@@ -341,7 +341,7 @@ case $mainmenu_selection in
 
 	case $backup_selection in
 	"rclone") 
-    if dpkg-query -W rclone | grep -w 'rclone' &> /dev/null && rclone listremotes | grep -w 'gdrive:' >> /dev/null ; then
+    if dpkg-query -W rclone | grep -w 'rclone' >> /dev/null && rclone listremotes | grep -w 'gdrive:' >> /dev/null ; then
 
         #rclone installed and gdrive exist
 			echo -e "\e[32m=====================================================================================\e[0m"
@@ -353,7 +353,7 @@ case $mainmenu_selection in
 			echo -e "     Please run \e[32;1mrclone config\e[0m and create remote \e[34;1m(gdrive)\e[0m for backup   "
 			echo -e "     "
 			echo -e "     Do as folows:"
-			echo -e "      [n] [gdrive] [12] [Enter] [Enter] [1] [Enter] [Enter] [n] [n]"
+			echo -e "      [n] [gdive] [12] [Enter] [Enter] [1] [Enter] [Enter] [n] [n]"
 			echo -e "      [Copy link from SSH console and paste it into the browser]"
 			echo -e "      [Login to your google account]"
 			echo -e "      [Copy token from Google and paste it into the SSH console]"

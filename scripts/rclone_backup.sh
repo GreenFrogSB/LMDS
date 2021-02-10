@@ -37,7 +37,7 @@
         echo -e "\e[36;1m    Only recent 4 backup files are kept\e[0m"
 
 		# check if rclone is installed and gdrive: configured 
-	if dpkg-query -W rclone | grep -w 'rclone' &> /dev/null && rclone listremotes | grep -w 'gdrive:' &> /dev/null ; then
+	if dpkg-query -W rclone | grep -w 'rclone' >> /dev/null && rclone listremotes | grep -w 'gdrive:' >> /dev/null ; then
 
         #sync local backups to gdrive (older gdrive copies will be deleted)
 		echo -e "\e[36;1m    Syncing to Google Drive ... \e[0m"

@@ -1,4 +1,6 @@
+# ==================================================================================================================================
 # Check instructions at https://greenfrognest.com/LMDSVPN.php if you would like to secure other containers using this as a gateway.
+# ==================================================================================================================================
   vpn:
     container_name: vpn-gateway
     image: dperson/openvpn-client

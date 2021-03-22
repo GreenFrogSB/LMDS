@@ -1,0 +1,34 @@
+# Check instructions at https://greenfrognest.com/LMDSVPN.php if you would like to secure other containers using this as a gateway.
+  vpn:
+    container_name: vpn-gateway
+    image: dperson/openvpn-client
+    restart: unless-stopped
+    ports:            # Add all port numbers of the containers that you will put behind VPN - not all containers just the one you have to.
+      - 90:80         # Redirecting to port 90 as 80 we will need at some point for reverseproxy
+    dns:              # Use VPN provided DNS IPs if you have them.
+      - 8.8.8.8
+      - 8.8.4.4
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - '/dev/net/tun:/dev/net/tun:rwm'
+    environment:
+      FIREWALL: ''    # If you use different VPN ports added under VPN section below, add them into FIREWALL section also, otherwise leave it empty as is.
+     #VPN 'server_address;user;password;port'    # Configure VPN server address, authentication and port if needed by your VPN provider (port value is optional)
+      PUID: 1000
+      PGID: 1000
+      TZ: UTC+0
+      ROUTE: '192.168.0.0/16'    # Specify subnet of your home LAN in order to connect into the container behind VPN - if you don't, containers will work but you wont be a$
+    networks:
+      - default
+    read_only: true
+    tmpfs:
+      - /run
+      - /tmp
+    security_opt:
+      - label:disable
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./vpn:/vpn    # Put .ovpn file you received from VPN provider inside ~/LMDS/vpn/ folder, required by the container to connect to the VPN provider server.
+

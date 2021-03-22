@@ -24,6 +24,7 @@ declare -A cont_array=(
 	[tvheadend]="TVheadend - TV streaming server"
 	[nginx]="Ngnix - Web Server"
 	[pihole]="Pi-Hole - Private DNS sinkhole"
+	[vpn]="vpn-client OpenVPN Gateway"
 )
 
 # CONTAINER keys
@@ -46,6 +47,7 @@ declare -a armhf_keys=(
 	"sabznbd"
 	"pihole"
 	"nginx"
+	"vpn"
 )
 
 sys_arch=$(uname -m)

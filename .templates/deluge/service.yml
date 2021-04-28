@@ -6,7 +6,7 @@
       - PUID=1000
       - PGID=1000
       - TZ=Europe/London
-      - UMASK_SET=022 #optional
+      - UMASK=022 #optional
       - DELUGE_LOGLEVEL=error #optional
     volumes:
       - ./volumes/deluge/config:/config

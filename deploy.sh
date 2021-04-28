@@ -24,7 +24,7 @@ declare -A cont_array=(
 	[tvheadend]="TVheadend - TV streaming server"
 	[nginx]="Ngnix - Web Server"
 	[pihole]="Pi-Hole - Private DNS sinkhole"
-	[vpn]="vpn-client OpenVPN Gateway"
+	[vpn]="VPN-Client - OpenVPN Gateway"
 )
 
 # CONTAINER keys

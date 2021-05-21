@@ -8,15 +8,15 @@ echo  -e "\e[33;1m    Stopping Docker-compose\e[0m"
 docker-compose stop
 
 echo  -e "\e[33;1m    Removing Docker-compose\e[0m"
-sudo apt-get remove docker-compose >> null
+sudo apt-get remove docker-compose &> /dev/null
 
 echo  -e "\e[33;1m    Getting Python3\e[0m"
-sudo apt-get install libffi-dev libssl-dev >> null
-sudo apt-get install python3-dev >> null
-sudo apt-get install -y python3 python3-pip >> null
+sudo apt-get install libffi-dev libssl-dev -y &> /dev/null
+sudo apt-get install python3-dev -y &> /dev/null
+sudo apt-get install python3 python3-pip -y &> /dev/null
 
 echo  -e "\e[33;1m    Installing new Docker-compose via pip3\e[0m"
-sudo pip3 install docker-compose >> null
+sudo pip3 install docker-compose &> /dev/null
 
 echo  -e "\e[33;1m    Starting stack up again\e[0m"
 docker-compose up -d

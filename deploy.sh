@@ -203,6 +203,11 @@ case $mainmenu_selection in
 		echo -e "\e[33;1m    Instaling Docker - please wait\e[0m"
 		curl -fsSL https://get.docker.com | sh &> /dev/null
 		sudo usermod -aG docker $USER &> /dev/null
+		# backporting libseccomp to prevent issues bug 8,9,10 and 11
+        # Releases : https://github.com/seccomp/libseccomp/releases
+                wget http://ftp.us.debian.org/debian/pool/main/libs/libseccomp/libseccomp2_2.5.1-1_armhf.deb  &> /dev/null
+                sudo dpkg -i libseccomp2_2.5.1-1_armhf.deb &> /dev/null
+                sudo rm libseccomp2_2.5.1-1_armhf.deb &> /dev/null
 		echo -e "\e[32;1m    Docker Installed\e[0m"
 
 	fi
@@ -343,7 +348,7 @@ case $mainmenu_selection in
 		echo -e "     "
 	fi
  ;;
- 
+
 	#Backup menu ---------------------------------------------------------------------
 "backup")
 	backup_selection=$(

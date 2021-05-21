@@ -178,11 +178,12 @@ fi
 # Display main menu
 mainmenu_selection=$(whiptail --title "Main Menu" --menu --notags \
 	"" 20 78 12 -- \
-	"install" "Install Docker" \
+	"install" "Install Docker & Docker-compose" \
 	"build" "Build LMDS Stack" \
 	"commands" "Docker commands" \
 	"misc" "Miscellaneous commands" \
 	"update" "Update LMDS Stack" \
+	"update_compose" "Update Docker-compose" \
 	"backup" "Backup and Restore LMDS" \
 	3>&1 1>&2 2>&3)
 # "backup" "Backup LMDS - (external scripts)" \
@@ -330,6 +331,19 @@ case $mainmenu_selection in
 		;;
 	esac
 	;;
+
+	#Update Docker-compose --------------------------------------------------------$
+"update_compose")
+	if command_exists docker-compose; then
+		 ./scripts/update_compose.sh
+	else
+		echo -e "     "
+		echo -e "\e[33;1m   Docker-compose not installed yet.\e[0m"
+		echo -e "\e[32;1m   Install it first then update if needed.\e[0m"
+		echo -e "     "
+	fi
+ ;;
+ 
 	#Backup menu ---------------------------------------------------------------------
 "backup")
 	backup_selection=$(

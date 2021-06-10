@@ -4,7 +4,7 @@
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
+      - TZ=UTC
     volumes:
       - ./volumes/nzbget/config:/config
       - ./downloads:/downloads

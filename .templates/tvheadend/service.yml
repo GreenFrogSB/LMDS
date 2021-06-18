@@ -4,7 +4,7 @@
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London
+      - TZ=UTC
       #- RUN_OPTS=<run options here> #optional
     volumes:
       - ./volumes/tvheadend/config:/config

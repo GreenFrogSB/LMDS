@@ -24,10 +24,12 @@ This repository will allow you to dynamically choose needed containers and autom
   <li> JellyFin - Media manager OpenSource : <b>8096</b></li>
   <li> Emby - Media manager like Plex : <b>8096</b></li>
   <li> Plex - Media manager : 32400/web</li>
+  <li> Ombi - Plex Requests Server : 3579</li>
   <li> EmbyStat - Statistics for Emby : 6555</li>
   <li> TVheadend - TV streaming server : 9981 </li>
   <li> Ngnix - Web Server - for future use clear instance for now: 80</li>
   <li> Pi-Hole - Private DNS sinkhole : 8089 <b>WebPass: <i>greenfrog</i></b></li>
+  <li> VPN-Client - OpenVPN Gateway (Instructions: https://greenfrognest.com/LMDSVPN.php)</li>
   </ul>
 <br>
 <i>Numbers after ":" identify a port that particular container will respond on, i.e. Portainer default port is :9000, point your browser it to your server IP adding :9000 at the end i.e. http://192.168.100.100:9000 you will see Portainer login page.</i>

@@ -1,0 +1,13 @@
+  ombi:
+    image: ghcr.io/linuxserver/ombi
+    container_name: ombi
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+#      - BASE_URL=/ombi #optional
+    volumes:
+      - .volumes/ombi/config:/config
+    ports:
+      - 3579:3579
+    restart: unless-stopped

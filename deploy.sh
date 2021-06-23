@@ -87,9 +87,7 @@ password_dialog() {
 }
 #test=$( password_dialog )
 
-function command_exists() {
-	command -v "$@" >/dev/null 2>&1
-}
+command_exists() { command -v "$@" >/dev/null 2>&1 ; }
 
 #function copies the template yml file to the local service folder and appends to the docker-compose.yml file
 function yml_builder() {

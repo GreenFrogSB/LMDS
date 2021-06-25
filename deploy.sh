@@ -8,6 +8,7 @@
 declare -A cont_array=(
 	[portainer]="Portainer - GUI Docker Manager"
 	[sonarr]="Sonarr"
+	[medusa]="Medusa"
 	[radarr]="Radarr"
 	[lidarr]="Lidarr"
 	[bazarr]="Bazarr"
@@ -32,6 +33,7 @@ declare -A cont_array=(
 declare -a armhf_keys=(
 	"portainer"
 	"sonarr"
+	"medusa"
 	"radarr"
 	"lidarr"
 	"bazarr"

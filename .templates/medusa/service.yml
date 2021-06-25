@@ -1,0 +1,15 @@
+  medusa:
+    image: ghcr.io/linuxserver/medusa
+    container_name: medusa
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+    volumes:
+      - ./volumes/medusa/config:/config
+      - ./downloads:/downloads
+      - ./media/tvshows:/tv
+    ports:
+      - 8081:8081
+    restart: unless-stopped
+

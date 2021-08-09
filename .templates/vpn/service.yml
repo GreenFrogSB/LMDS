@@ -1,13 +1,13 @@
-# ==================================================================================================================================
-# Check instructions at https://greenfrognest.com/LMDSVPN.php if you would like to secure other containers using this as a gateway.
-# ==================================================================================================================================
+# ======================================================================================================================================
+# Check instructions at https://greenfrognest.com/LMDSVPN.php if you would like to secure other containers using this one as a gateway.
+# ======================================================================================================================================
   vpn:
     container_name: vpn-gateway
     image: dperson/openvpn-client
     restart: unless-stopped
-    ports:            # Add all port numbers of the containers that you will put behind VPN - not all containers just the one you have to.
-      - 90:80         # Redirecting to port 90 as 80 we will need at some point for reverseproxy
-    dns:              # Use VPN provided DNS IPs if you have them.
+    ports:            # List all port numbers of the containers that you would like to put behind VPN. Remember, these ports can only exist in a single place inside entire docker-compose.yml file.
+      - 90:80         # Redirecting to port 90 as 80 we will need this at some point for reverseproxy traefik. 
+    dns:              # Use VPN provided DNS IPs if you have them otherwise leave as is.
       - 8.8.8.8
       - 8.8.4.4
     cap_add:
@@ -15,12 +15,12 @@
     devices:
       - '/dev/net/tun:/dev/net/tun:rwm'
     environment:
-      FIREWALL: ''    # If you use different VPN ports added under VPN section below, add them into FIREWALL section also, otherwise leave it empty as is.
-     #VPN 'server_address;user;password;port'    # Configure VPN server address, authentication and port if needed by your VPN provider (port value is optional)
+      FIREWALL: ''    # If you use different VPN ports then default 1194 add them in here, otherwise leave it empty as is.
+     #VPN 'server_address;user;password;port'    # Configure VPN server address, authentication and port if needed by your VPN provider (port value is optional) we will use an external config file for this, leave commented as is.
       PUID: 1000
       PGID: 1000
       TZ: UTC+0
-      ROUTE: '192.168.0.0/16'    # Specify subnet of your home LAN in order to connect into the container behind VPN - if you don't, containers will work but you wont be a$
+      ROUTE: '192.168.0.0/16'    # Specify subnet of your home LAN in order to connect into the container behind VPN - if you don't, containers will work but you wont be able to connect to them locally.
     networks:
       - default
     read_only: true
@@ -32,5 +32,7 @@
     stdin_open: true
     tty: true
     volumes:
-      - ./vpn:/vpn    # Put .ovpn file you received from VPN provider inside ~/LMDS/vpn/ folder, required by the container to connect to the VPN provider server.
-
+      - ./vpn:/vpn    # This folder should contain two files:
+                      # 1. Copy .ovpn file you received from VPN provider in here and rename it to vpn.conf
+                      # 2. Create vpn.auth file and put there your username and password in two separate lines one under another.
+                      # Important: edit vpn.conf file you renamed and find line called auth-user-pass append it with a path to your vpn.auth file, in my case: auth-user-pass /vpn/vpn.auth 

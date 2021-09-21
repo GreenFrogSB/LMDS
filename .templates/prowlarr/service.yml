@@ -1,0 +1,12 @@
+  prowlarr:
+    image: ghcr.io/linuxserver/prowlarr:develop
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+    volumes:
+      - ./volumes/prowlarr/data:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped

@@ -18,6 +18,7 @@ Create Docker server and start microservices in minutes with LMDS.
   <li> Lidarr : 8686</li>
   <li> Bazarr : 6767</li>
   <li> Jackett : 9117</li>
+  <li> Prowlarr - Jackett alternative (dev) : 9696</li>
   <li> Deluge - Torrent Client : 8112</li>
   <li> qBittorrent - Torrent Client : 15080</li>
   <li> Transmission - Torrent Client : 9091</li>

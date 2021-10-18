@@ -25,6 +25,7 @@ declare -A cont_array=(
 	[emby]="Emby - Media manager like Plex"
 	[embystat]="EmbyStat - Statistics for Emby"
 	[tvheadend]="TVheadend - TV streaming server"
+    [traefik]="Traefik 2 - Reverse Proxy"
 	[nginx]="Ngnix - Web Server"
 	[pihole]="Pi-Hole - Private DNS sinkhole"
 	[vpn]="VPN-Client - OpenVPN Gateway"
@@ -53,6 +54,7 @@ declare -a armhf_keys=(
 	"sabznbd"
 	"pihole"
 	"nginx"
+	"traefik"
 	"vpn"
 )
 

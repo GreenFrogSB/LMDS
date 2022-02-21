@@ -26,7 +26,7 @@ declare -A cont_array=(
 	[embystat]="EmbyStat - Statistics for Emby"
 	[tvheadend]="TVheadend - TV streaming server"
     [traefik]="Traefik 2 - Reverse Proxy"
-	[web]="NPMP Server - Ngnix + PHP + MariaDB + PHPmyadmin"
+	[web]="NPMP Server - NGINX + PHP + MariaDB + PHPmyadmin"
 	[pihole]="Pi-Hole - Private DNS sinkhole"
 	[vpn]="VPN-Client - OpenVPN Gateway"
 )

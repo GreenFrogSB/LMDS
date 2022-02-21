@@ -26,7 +26,7 @@ declare -A cont_array=(
 	[embystat]="EmbyStat - Statistics for Emby"
 	[tvheadend]="TVheadend - TV streaming server"
     [traefik]="Traefik 2 - Reverse Proxy"
-	[nginx]="Ngnix - Web Server"
+	[web]="NPMP Server - Ngnix + PHP + MariaDB + PHPmyadmin"
 	[pihole]="Pi-Hole - Private DNS sinkhole"
 	[vpn]="VPN-Client - OpenVPN Gateway"
 )
@@ -53,7 +53,7 @@ declare -a armhf_keys=(
 	"nzbget"
 	"sabznbd"
 	"pihole"
-	"nginx"
+	"web"
 	"traefik"
 	"vpn"
 )

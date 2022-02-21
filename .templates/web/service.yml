@@ -18,7 +18,7 @@
   php7:
     build:
       context: .
-      dockerfile: .templates/web/php/dockerfile
+      dockerfile: .templates/web/config/php/dockerfile
     image: christexe/php:7.4-fpm-alpine
     container_name: php7
     restart: unless-stopped

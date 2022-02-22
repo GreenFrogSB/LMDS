@@ -1,0 +1,71 @@
+#######################################
+# NGINX nginx01  (WebServ NPMP)
+#######################################
+  nginx01:
+    image: nginx:alpine
+    container_name: nginx01
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 80:80
+    volumes:
+      - ./volumes/WebServ/ngnix01/www/html/:/var/www/html
+      - ./volumes/WebServ/ngnix01/config/conf.d/:/etc/nginx/conf.d/
+
+#######################################
+# PHP7 (WebServ NPMP)
+#######################################
+  php7:
+    build:
+      context: .
+      dockerfile: .templates/web/config/php/dockerfile
+    image: lmds/php:7.4-fpm-alpine
+    container_name: php7
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: php7
+    working_dir: /var/www/html
+    volumes:
+      - ./volumes/WebServ/ngnix01/www/html/:/var/www/html
+      - ./volumes/WebServ/php7/config.d/:/usr/local/etc/php/conf.d/
+      - ./volumes/WebServ/php7/php.ini/:/usr/local/etc/php/
+
+#######################################
+# MariaDB (WebServ NPMP)
+#######################################
+  mariadb:
+    image: linuxserver/mariadb
+    container_name: mariadb
+    restart: unless-stopped
+    environment:
+      - TZ=UTC
+      - PUID=1000 # for UserID
+      - PGID=1000 # for GroupID
+      - MYSQL_USER=lmds # This user will have superuser access to the database
+      - MYSQL_ROOT_PASSWORD=passw0rd # Set this to root password for installation (minimum 4 characters).
+      - MYSQL_PASSWORD=passw0rd # Set this to the password you want to use for you MYSQL_USER (minimum 4 characters).
+      - MYSQL_DATABASE=lmdsdb # Specify the name of a database to be created on image startup.
+    volumes:
+      - ./volumes/WebServ/mariadb:/config # Contains the db itself and all assorted settings.
+    ports:
+      - 3306:3306/tcp # Mariadb listens on this por
+
+#######################################
+# PHP MyAdmin (WebServ NPMP)
+#######################################
+  phpmyadmin:
+    image: linuxserver/phpmyadmin:5.1.3
+    container_name: phpmyadmin
+    restart: unless-stopped
+    environment:
+      - TZ=UTC # Specify a timezone to use
+      - PUID=1000 # User ID to run as
+      - PGID=1000 # Group ID to run as
+      - PMA_ARBITRARY=1 # Set to 1 to allow you to connect to any server. Setting to 0 will only allow you to connect to specified hosts
+    volumes:
+      - ./volumes/WebServ/phpmyadmin:/config # Contains all relevant configuration files.
+    ports:
+      - 8888:80/tcp # Web UI
+    depends_on:
+      - mariadb

@@ -19,7 +19,7 @@
     build:
       context: .
       dockerfile: .templates/web/config/php/dockerfile
-    image: christexe/php:7.4-fpm-alpine
+    image: lmds/php:7.4-fpm-alpine
     container_name: php7
     restart: unless-stopped
     tty: true

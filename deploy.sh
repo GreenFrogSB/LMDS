@@ -191,8 +191,8 @@ mainmenu_selection=$(whiptail --title "Main Menu" --menu --notags \
 	"update" "Update LMDS Stack" \
 	"update_compose" "Update Docker-compose" \
 	"backup" "Backup and Restore LMDS" \
+	"earn" "Earn Money with LMDS" \
 	3>&1 1>&2 2>&3)
-# "backup" "Backup LMDS - (external scripts)" \
 
 
 case $mainmenu_selection in
@@ -354,6 +354,35 @@ case $mainmenu_selection in
 		echo -e "     "
 	fi
  ;;
+
+
+	#Backup menu ---------------------------------------------------------------------
+"earn")
+	earn_selection=$(
+		whiptail --title "Earn Money with LMDS" --menu --notags \
+			"This is potentially the easiest way to get some passive income on Raspberry Pi that is running 24/7. \
+            This App will use some of your Internet bandwidth to generate profit for you, do not expect to get rich this way ;)\
+            Earnings depend on your geographical location and its demand rather than Internet speed or anything else. \
+			\
+            Using EarnApp you allow BrightData to occasionally access websites through your device.\
+			BrightData will only access public Internet web pages, not slow down your device or Internet \
+			and never access personal information, except IP address.\ 
+			\
+            Instructions: https:/\/\greenfrognest.com
+" 20 78 12 -- \
+			"earn_install" "Install Now" \
+			"earn_goback" "Install Later"\
+			3>&1 1>&2 2>&3
+	)
+	case $earn_selection in
+
+
+	"earn_install") ./scripts/earnlmds.sh ;;
+	"earn_goback") .deploy.sh ;;
+
+	esac
+	;;
+
 
 	#Backup menu ---------------------------------------------------------------------
 "backup")

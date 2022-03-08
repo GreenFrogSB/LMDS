@@ -53,25 +53,24 @@ perr()
 }
 
 welcome_text(){
-    echo -e "\e[32m=====================================================================================\e[0m"
+    echo -e "\e[32m=================================================================================================\e[0m"
     echo
-    echo "\e[36;1m                               Installing EarnApp CLI\e[0m"
-    echo "\e[36;1m                    Welcome to EarnApp for Linux and Raspberry Pi.\e[0m"
-    echo "\e[36;1m               EarnApp makes you money by sharing your spare bandwidth.\e[0m"
-    echo "\e[36;1m Visit https://earnapp.com/i/snq8y4m to create your account if you don't have it already.\e[0m"
-    echo "\e[36;1m     After installation is completed you should register this node under your account.\e[0m"
+    echo -e "\e[36;1m                               Installing EarnApp CLI\e[0m"
+    echo -e "\e[36;1m                    Welcome to EarnApp for Linux and Raspberry Pi.\e[0m"
+    echo -e "\e[36;1m               EarnApp makes you money by sharing your spare bandwidth.\e[0m"
+    echo -e "\e[36;1m Visit https://earnapp.com/i/snq8y4m to create your account if you don't have one already.\e[0m"
+    echo -e "\e[36;1m     After installation is completed you should register this node under your account.\e[0m"
     echo
-    echo -e "\e[32m=====================================================================================\e[0m"
+    echo -e "\e[32m===================================================================================================\e[0m"
     echo
-    echo "To use EarnApp, allow BrightData to occasionally access websites \
-through your device. BrightData will only access public Internet web \
-pages, not slow down your device or Internet and never access personal \
-information, except IP address - see privacy policy and full terms of \
-service on earnapp.com."
+    echo                   "To use EarnApp, allow BrightData to occasionally access websites through your device." 
+    echo               "BrightData will only access public Internet web pages, not slow down your device or Internet" 
+    echo "and never access personal information, except IP address - see privacy policy and full terms of service on earnapp.com."
+    echo
 }
 
 ask_consent(){
-    read -p "Do you agree to EarnApp's terms? (Write 'yes' to continue): " \
+    read -p -e "\e[36;1m Do you agree to EarnApp's terms? (Write 'yes' to continue): \e[0m" \
         consent
 }
 

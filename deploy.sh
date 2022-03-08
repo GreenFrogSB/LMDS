@@ -191,7 +191,7 @@ mainmenu_selection=$(whiptail --title "Main Menu" --menu --notags \
 	"update" "Update LMDS Stack" \
 	"update_compose" "Update Docker-compose" \
 	"backup" "Backup and Restore LMDS" \
-	"earn" "Earn Money with LMDS" \
+	"earn" "Earn \$\$\$ Money with LMDS" \
 	3>&1 1>&2 2>&3)
 
 
@@ -355,33 +355,16 @@ case $mainmenu_selection in
 	fi
  ;;
 
-
-	#Backup menu ---------------------------------------------------------------------
+        #Earn with LMDS ---------------------------------------------------------------------
 "earn")
-	earn_selection=$(
-		whiptail --title "Earn Money with LMDS" --menu --notags \
-			"This is potentially the easiest way to get some passive income on Raspberry Pi that is running 24/7. \
-            This App will use some of your Internet bandwidth to generate profit for you, do not expect to get rich this way ;)\
-            Earnings depend on your geographical location and its demand rather than Internet speed or anything else. \
-			\
-            Using EarnApp you allow BrightData to occasionally access websites through your device.\
-			BrightData will only access public Internet web pages, not slow down your device or Internet \
-			and never access personal information, except IP address.\ 
-			\
-            Instructions: https:/\/\greenfrognest.com
-" 20 78 12 -- \
-			"earn_install" "Install Now" \
-			"earn_goback" "Install Later"\
-			3>&1 1>&2 2>&3
-	)
-	case $earn_selection in
+if (whiptail --title "Earn Money with LMDS" --yesno "This is potentially the easiest way to get some passive income on Raspberry Pi that is running 24/7. \nThis App will  use some of your Internet bandwidth to generate profit for you, do not expect to get rich this way ;) \nEarnings depend on your geographical location and its traffick demand rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/earnwithlmds.php \n\nThis is not CPU intensive process, therefore can be run on low powered devices like Raspberry Pi" 20 70)
 
 
-	"earn_install") ./scripts/earnlmds.sh ;;
-	"earn_goback") .deploy.sh ;;
+then ./scripts/earnlmds.sh
+fi
+        ;;
 
-	esac
-	;;
+
 
 
 	#Backup menu ---------------------------------------------------------------------

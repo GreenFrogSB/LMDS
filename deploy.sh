@@ -357,7 +357,7 @@ case $mainmenu_selection in
 
         #Earn with LMDS ---------------------------------------------------------------------
 "earn")
-if (whiptail --title "Earn Money with LMDS" --yesno "This is potentially the easiest way to get some passive income on Raspberry Pi that is running 24/7. \nThis App will  use some of your Internet bandwidth to generate profit for you, do not expect to get rich this way ;) \nEarnings depend on your geographical location and its traffick demand rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/earnwithlmds.php \n\nThis is not CPU intensive process, therefore can be run on low powered devices like Raspberry Pi" 20 70)
+if (whiptail --title "Earn Money with LMDS" --yesno "This is potentially the easiest way to get some passive income on Raspberry Pi that is running 24/7. \nThis App will use some of your Internet bandwidth to generate profit for you, do not expect to get rich this way ;) \nEarnings depend on your geographical location and its traffick demand rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/earnwithlmds.php \n\nThis is not CPU intensive process, therefore can be run on low powered devices like Raspberry Pi" 20 70)
 
 
 then sudo ./scripts/earnlmds.sh

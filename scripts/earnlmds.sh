@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # LICENSE_CODE ZON ISC
-
 PRINT_PERR=0
 OS_NAME=$(uname -s)
 OS_ARCH=$(uname -m)
@@ -53,19 +52,19 @@ perr()
 }
 
 welcome_text(){
-    echo -e "\e[32m=================================================================================================\e[0m"
+    echo -e "\e[32m==============================================================================================================================\e[0m"
     echo
-    echo -e "\e[36;1m                               Installing EarnApp CLI\e[0m"
-    echo -e "\e[36;1m                    Welcome to EarnApp for Linux and Raspberry Pi.\e[0m"
-    echo -e "\e[36;1m               EarnApp makes you money by sharing your spare bandwidth.\e[0m"
-    echo -e "\e[36;1m Visit \e[32;1mhttps://earnapp.com/i/snq8y4m\e[0m\e[36;1m to create your account if you don't have one already.\e[0m"
-    echo -e "\e[36;1m     After installation is completed you should register this node under your account.\e[0m"
+    echo -e "\e[36;1m                                        Installing EarnApp CLI\e[0m"
+    echo -e "\e[36;1m                            Welcome to EarnApp for Linux and Raspberry Pi.\e[0m"
+    echo -e "\e[36;1m                        EarnApp makes you money by sharing your spare bandwidth.\e[0m"
+    echo -e "\e[36;1m Visit \e[32;1mhttps://earnapp.com/i/snq8y4m\e[0m\e[36;1m and create your account firts if you don't have one already.\e[0m"
+    echo -e "\e[36;1m                After installation is completed you should register this node under your account.\e[0m"
     echo
-    echo -e "\e[32m===================================================================================================\e[0m"
+    echo -e "\e[32m==============================================================================================================================\e[0m"
     echo
-    echo "                To use EarnApp, allow BrightData to occasionally access websites through your device." 
-    echo "             BrightData will only access public Internet web pages, not slow down your device or Internet" 
-    echo "and never access personal information, except IP address - see privacy policy and full terms of service on earnapp.com."
+    echo "To use EarnApp, allow BrightData to occasionally access websites through your device." 
+    echo "BrightData will only access public Internet web pages, not slow down your device or Internet" 
+    echo "and never access personal information, except IP address - see privacy policy and full terms of service on https://earnapp.com/i/snq8y4m."
     echo
 }
 

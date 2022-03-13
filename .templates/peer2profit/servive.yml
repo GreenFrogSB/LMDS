@@ -1,6 +1,7 @@
 
 # =====================================================================================================================
 # Uncomment bellow and update P2P_EMAIL: <your@email.com> with email address you registered with on their site.
+# Container require 64 bit version of Raspbian to run
 # =====================================================================================================================
 
 #  peer2profit01:

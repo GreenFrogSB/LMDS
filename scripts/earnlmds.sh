@@ -59,7 +59,7 @@ welcome_text(){
     echo -e "\e[36;1m                            Welcome to EarnApp for Linux and Raspberry Pi.\e[0m"
     echo -e "\e[36;1m                        EarnApp makes you money by sharing your spare bandwidth.\e[0m"
     echo -e "\e[36;1m Visit \e[32;1mhttps://earnapp.com/i/snq8y4m\e[0m\e[36;1m and create your account firts if you don't have one already.\e[0m"
-    echo -e "\e[36;1m                After installation is completed you should register this node under your account.\e[0m"
+    echo -e "\e[36;1m         After installation is completed you should register this node under your account.\e[0m"
     echo
     echo -e "\e[32m==============================================================================================================================\e[0m"
     echo

@@ -1,0 +1,9 @@
+# =====================================================================================================================
+# Uncomment bellow and update -email <your@email.com> -pass <your password> -device <custom name> with your details.
+# =====================================================================================================================
+
+#  honeygain01:
+#    container_name: honeygain01
+#    image: honeygain/honeygain
+#    command:  -tou-accept -email <your@email.com> -pass <your password> -device <custom name>
+#    restart: unless-stopped

@@ -30,7 +30,7 @@ declare -A cont_array=(
 	[pihole]="Pi-Hole - Private DNS sinkhole"
 	[vpn]="VPN-Client - OpenVPN Gateway"
 	[honeygain]="Earn \$\$\$ with LMDS"
-    [peer2profit]="Earn \$\$\$  with LMDS"
+    [peer2profit]="Earn \$\$\$ with LMDS"
 
 )
 
@@ -59,8 +59,8 @@ declare -a armhf_keys=(
 	"web"
 	"traefik"
 	"vpn"
-    "honeygain"
-    "peer2profit"
+	"honeygain"
+	"peer2profit"
 
 )
 
@@ -374,13 +374,13 @@ case $mainmenu_selection in
 
 	case $earn_sellection in
 	"earnapp")
-		if (whiptail --title "EarnApp" --yesno "Native Linux App not a container. \nnThis App will use some of your Internet bandwidth to generate profit. \nEarnings depend on your geographical location rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/earnwithlmds.php \n\nThis is not CPU intensive process, therefore can be run on low powered devices like Raspberry Pi \n\n Create an acount before continuing: \nhttps://earnapp.com/i/snq8y4m" 20 70)
+		if (whiptail --title "EarnApp" --yesno "Native Linux App not a container. \nnThis App will use some of your Internet bandwidth to generate profit. \nEarnings depend on your geographical location rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/earnwithlmds.php \n\nThis is not CPU intensive process, therefore can be run on low powered devices like Raspberry Pi \n\nCreate an acount before continuing at: \nhttps://earnapp.com/i/snq8y4m" 20 70)
 		then 
 			sudo ./scripts/earnlmds.sh
 fi
 		;;
 	"honeygain")
-		if (whiptail --title "MoneyGain" --yesno "Docker based application that can be run alongsite other container deployed on LMDS. \nHoneyGain do not provide dedicated ARM based container that can be run on Raspberry Pi chip, LMDS overcome this limitation. \n\nFor more details on how does it work visit: https://greenfrognest.com/HoneyGainLMDS.php \n\n Create an acount before continuing: https://r.honeygain.me/GREENFDEC8 \nUsing above link, you will get 5$ for free to start with." 20 70)
+		if (whiptail --title "HoneyGain" --yesno "Docker based application that can be run alongsite other container deployed on LMDS. \nHoneyGain do not provide dedicated ARM based container that can be run on Raspberry Pi chip, LMDS overcome this limitation. \n\nFor more details on how does it work visit: https://greenfrognest.com/HoneyGainLMDS.php \n\nCreate an acount before continuing at: https://r.honeygain.me/GREENFDEC8 \nUsing above link, will get you 5$ for free to start with." 20 70)
 		then
 			docker run --privileged --rm tonistiigi/binfmt --install x86_64
 			./scripts/honeylmds.sh

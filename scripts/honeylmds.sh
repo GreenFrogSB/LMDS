@@ -5,8 +5,8 @@ echo -e "\e[36;1mHoneygain already deployed - check docker-compose.yml\e[0m"
 
 else
  mkdir services/honeygain
- cp .templates/honeygain/servive.yml services/honeygain/
- cat .templates/honeygain/servive.yml >> docker-compose.yml
+ cp .templates/honeygain/service.yml services/honeygain/
+ cat .templates/honeygain/service.yml >> docker-compose.yml
  cat >> services/selection.txt <<EOF
 honeygain
 EOF

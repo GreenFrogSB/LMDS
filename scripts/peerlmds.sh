@@ -5,8 +5,8 @@ echo -e "\e[36;1mPeer2Profit already deployed - check docker-compose.yml\e[0m"
 
 else
 mkdir services/peer2profit
-cp .templates/peer2profit/servive.yml services/peer2profit/
-cat .templates/peer2profit/servive.yml >> docker-compose.yml 
+cp .templates/peer2profit/service.yml services/peer2profit/
+cat .templates/peer2profit/service.yml >> docker-compose.yml 
 cat >> services/selection.txt <<EOF
 peer2profit
 EOF

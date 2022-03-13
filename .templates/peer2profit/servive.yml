@@ -1,10 +1,12 @@
+
 # =====================================================================================================================
-# Uncomment bellow and update -email <your@email.com> -pass <your password> -device <custom name> with your details.
+# Uncomment bellow and update P2P_EMAIL: <your@email.com> with email address you registered with on their site.
 # =====================================================================================================================
 
 #  peer2profit01:
 #    container_name: peer2profit01
 #    image: peer2profit/peer2profit_x86_64:latest
 #    environment:
-#      P2P_EMAIL: GreenFrogContact@gmail.com
+#      P2P_EMAIL: <your@email.com>
 #    restart: unless-stopped
+

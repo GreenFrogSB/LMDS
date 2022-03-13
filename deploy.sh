@@ -380,16 +380,16 @@ case $mainmenu_selection in
 fi
 		;;
 	"honeygain")
-		if (whiptail --title "HoneyGain" --yesno "Docker based application that can be run alongsite other container deployed on LMDS. \nHoneyGain do not provide dedicated ARM based container that can be run on Raspberry Pi chip, LMDS overcome this limitation. \n\nFor more details on how does it work visit: https://greenfrognest.com/HoneyGainLMDS.php \n\nCreate an acount before continuing at: https://r.honeygain.me/GREENFDEC8 \nUsing above link, will get you 5$ for free to start with." 20 70)
+		if (whiptail --title "HoneyGain" --yesno "Docker based application that can be run alongsite other containers deployed on LMDS. HoneyGain do not provide dedicated ARM based container that can be run on Raspberry Pi chip but LMDS overcome this limitation. \n\nFor more details on how does it work visit: https://greenfrognest.com/HoneyGainLMDS.php \n\nCreate an acount before continuing at: https://r.honeygain.me/GREENFDEC8 \n\nUsing above link, will get you 5$ for free to start with." 20 70)
 		then
-			docker run --privileged --rm tonistiigi/binfmt --install x86_64
+			docker run --privileged --rm tonistiigi/binfmt --install x86_64 &> /dev/null
 			./scripts/honeylmds.sh
 fi
 		;;
 	"peer2profit")
-		if (whiptail --title "Peer2Profit" --yesno "Docker based application that can be run alongsite other container deployed on LMDS. \nnThis App will use some of your Internet bandwidth to generate profit. \nEarnings depend on your geographical location rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/Peer2Profit.php \n\nThis is not CPU intensive process, therefore can be run on low powered devices like Raspberry Pi \n\n Create an acount before continuing: https://p2pr.me/164528477962110dab05459" 20 70)
+		if (whiptail --title "Peer2Profit" --yesno "Docker based application that can be run alongsite other containers deployed on LMDS. \nThis App will use some of your Internet bandwidth to generate profit. Earnings depend on your geographical location rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/Peer2Profit.php \n\nThis is not CPU intensive process, therefore can be run on low powered devices like Raspberry Pi \n\nCreate an acount before continuing: https://p2pr.me/164528477962110dab05459" 20 70)
 		then
-			docker run --privileged --rm tonistiigi/binfmt --install x86_64
+			docker run --privileged --rm tonistiigi/binfmt --install x86_64 &> /dev/null
 			./scripts/peerlmds.sh
 fi
 

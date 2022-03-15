@@ -1,6 +1,0 @@
-			
-  honeygain01:
-    container_name: honeygain01
-    image: honeygain/honeygain
-    command:  -tou-accept -email your@email -pass erhwergwerhgwe -device honeygain01
-    restart: unless-stopped

@@ -1,6 +1,0 @@
-  peer2profit01:
-    container_name: peer2profit01
-    image: peer2profit/peer2profit_x86_64:latest
-    environment:
-      P2P_EMAIL: your@email
-    restart: unless-stopped

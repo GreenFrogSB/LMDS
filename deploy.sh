@@ -25,12 +25,12 @@ declare -A cont_array=(
 	[emby]="Emby - Media manager like Plex"
 	[embystat]="EmbyStat - Statistics for Emby"
 	[tvheadend]="TVheadend - TV streaming server"
-        [traefik]="Traefik 2 - Reverse Proxy"
+	[traefik]="Traefik 2 - Reverse Proxy"
 	[web]="NPMP Server - NGINX + PHP + MariaDB + phpMyAdmin"
 	[pihole]="Pi-Hole - Private DNS sinkhole"
 	[vpn]="VPN-Client - OpenVPN Gateway"
 	[honeygain]="Check - Earn \$ with LMDS - in main menu"
-  	[peer2profit]="Earn \$ with LMDS - in main menu"
+  	[peer2profit]="Check - Earn \$ with LMDS - in main menu"
 
 )
 
@@ -380,7 +380,7 @@ case $mainmenu_selection in
 fi
 		;;
 	"honeygain")
-honeyemail=$(whiptail --inputbox "Steps: \n1. Register at: https://r.honeygain.me/GREENFDEC8 \n2. Enter Email used in registration to the filed below\n3. OK \n\nHoneygain is a Docker based application that can be run alongsite other containers deployed on LMDS. App will use some of your Internet bandwidth to generate profit. Earnings depend on your geographical location rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/HoneyGainLMDS.php \n\nEnter Email you registered with Honeygain" 22 80 your@email --title "Honeygain Container Setup" 3>&1 1>&2 2>&3)
+honeyemail=$(whiptail --inputbox "Steps: \n1. Register at: https://r.honeygain.me/GREENFDEC8 \n2. Enter Email usedduring registration to the filed below\n3. OK \n\nHoneygain is a Docker based application that can be run alongsite other containers deployed on LMDS. App will use some of your Internet bandwidth to generate profit. Earnings depend on your geographical location rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/HoneyGainLMDS.php \n\nEnter Email you registered with Honeygain" 22 80 your@email --title "Honeygain Container Setup" 3>&1 1>&2 2>&3)
 honeypass=$(whiptail --inputbox "Steps: \n4. Enter Honeygain password you use on the website \n5. OK" 15 60 password --title "Honeygain Container Setup" 3>&1 1>&2 2>&3) 
 honeyname=$(whiptail --inputbox "Steps: \n6. Enter a container name for deployment \n7. OK" 15 60 honeygain01 --title "Honeygain Container Setup" 3>&1 1>&2 2>&3)
 
@@ -408,6 +408,7 @@ EOF
 			cat >> services/selection.txt <<EOF 
 honeygain
 EOF
+			docker run --privileged --rm tonistiigi/binfmt --install x86_64  >> /dev/null
 			echo -e "\e[36;1mOK - Container definition added to the docker-compose file\e[0m"
 			echo -e "run \e[104;1mdocker-compose up -d\e[0m create container"
 			fi
@@ -443,6 +444,7 @@ EOF
 			cat >> services/selection.txt <<EOF 
 peer2profit
 EOF
+			docker run --privileged --rm tonistiigi/binfmt --install x86_64  >> /dev/null
 			echo -e "\e[36;1mOK - Container definition added to the docker-compose file\e[0m"
 			echo -e "run \e[104;1mdocker-compose up -d\e[0m create container"
 			fi

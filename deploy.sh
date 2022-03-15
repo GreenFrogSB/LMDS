@@ -25,12 +25,12 @@ declare -A cont_array=(
 	[emby]="Emby - Media manager like Plex"
 	[embystat]="EmbyStat - Statistics for Emby"
 	[tvheadend]="TVheadend - TV streaming server"
-    [traefik]="Traefik 2 - Reverse Proxy"
+        [traefik]="Traefik 2 - Reverse Proxy"
 	[web]="NPMP Server - NGINX + PHP + MariaDB + phpMyAdmin"
 	[pihole]="Pi-Hole - Private DNS sinkhole"
 	[vpn]="VPN-Client - OpenVPN Gateway"
-	[honeygain]="Earn \$\$\$ with LMDS"
-    [peer2profit]="Earn \$\$\$ with LMDS"
+	[honeygain]="Check - Earn \$ with LMDS - in main menu"
+  	[peer2profit]="Earn \$ with LMDS - in main menu"
 
 )
 
@@ -197,7 +197,7 @@ mainmenu_selection=$(whiptail --title "Main Menu" --menu --notags \
 	"update" "Update LMDS Stack" \
 	"update_compose" "Update Docker-compose" \
 	"backup" "Backup and Restore LMDS" \
-	"earn" "Earn \$\$\$ with LMDS" \
+	"earn" "Earn \$ with LMDS" \
 	3>&1 1>&2 2>&3)
 
 
@@ -366,9 +366,9 @@ case $mainmenu_selection in
 	earn_sellection=$(
 		whiptail --title "Earn with LMDS" --menu --notags \
 			"Current Earning Options supported by LMDS" 20 78 12 -- \
-			"earnapp" "EarnApp - Native Linux App" \
 			"honeygain" "HoneyGain - Docker container" \
 			"peer2profit" "Peer2Profit - Docker container" \
+			"earnapp" "EarnApp - Native Linux App" \
 			3>&1 1>&2 2>&3
 	)
 
@@ -380,19 +380,75 @@ case $mainmenu_selection in
 fi
 		;;
 	"honeygain")
-		if (whiptail --title "HoneyGain" --yesno "Docker based application that can be run alongsite other containers deployed on LMDS. HoneyGain do not provide dedicated ARM based container that can be run on Raspberry Pi chip but LMDS overcome this limitation. \n\nFor more details on how does it work visit: https://greenfrognest.com/HoneyGainLMDS.php \n\nCreate an acount before continuing at: https://r.honeygain.me/GREENFDEC8 \n\nUsing above link, will get you 5$ for free to start with." 20 70)
+honeyemail=$(whiptail --inputbox "Steps: \n1. Register at: https://r.honeygain.me/GREENFDEC8 \n2. Enter Email used in registration to the filed below\n3. OK \n\nHoneygain is a Docker based application that can be run alongsite other containers deployed on LMDS. App will use some of your Internet bandwidth to generate profit. Earnings depend on your geographical location rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/HoneyGainLMDS.php \n\nEnter Email you registered with Honeygain" 22 80 your@email --title "Honeygain Container Setup" 3>&1 1>&2 2>&3)
+honeypass=$(whiptail --inputbox "Steps: \n4. Enter Honeygain password you use on the website \n5. OK" 15 60 password --title "Honeygain Container Setup" 3>&1 1>&2 2>&3) 
+honeyname=$(whiptail --inputbox "Steps: \n6. Enter a container name for deployment \n7. OK" 15 60 honeygain01 --title "Honeygain Container Setup" 3>&1 1>&2 2>&3)
+
+exitstatus=$?
+if [ $exitstatus = 0 ] && [ -z "$honeymail" ]
+	then
+		#echo $honeyemail $honeypass $honeyname
+		if [ -d services/honeygain ]
 		then
-			docker run --privileged --rm tonistiigi/binfmt --install x86_64 &> /dev/null
-			./scripts/honeylmds.sh
-fi
+			echo -e "\e[36;1mHoneygain already deployed - check docker-compose.yml\e[0m"
+			echo -e "\e[36;1mEdit and copy definitions from ~/LMDS/services/honeygain/service.yml\e[0m"
+		else
+			mkdir services/honeygain
+			touch .templates/honeygain/service.yml
+			cat > .templates/honeygain/service.yml <<EOF
+			
+  $honeyname:
+    container_name: $honeyname
+    image: honeygain/honeygain
+    command:  -tou-accept -email $honeyemail -pass $honeypass -device $honeyname
+    restart: unless-stopped
+EOF
+			cat .templates/honeygain/service.yml >> docker-compose.yml
+			cp .templates/honeygain/service.yml services/honeygain/
+			cat >> services/selection.txt <<EOF 
+honeygain
+EOF
+			echo -e "\e[36;1mOK - Container definition added to the docker-compose file\e[0m"
+			echo -e "run \e[104;1mdocker-compose up -d\e[0m create container"
+			fi
+	else
+    	echo -e "\e[36;1mCancel - Container not created\e[0m"
+	fi
+
+
 		;;
 	"peer2profit")
-		if (whiptail --title "Peer2Profit" --yesno "Docker based application that can be run alongsite other containers deployed on LMDS. \nThis App will use some of your Internet bandwidth to generate profit. Earnings depend on your geographical location rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/Peer2Profit.php \n\nThis is not CPU intensive process, therefore can be run on low powered devices like Raspberry Pi \n\nCreate an acount before continuing: https://p2pr.me/164528477962110dab05459" 20 70)
-		then
-			docker run --privileged --rm tonistiigi/binfmt --install x86_64 &> /dev/null
-			./scripts/peerlmds.sh
-fi
+peeremail=$(whiptail --inputbox "Steps: \n1. Register at: https://p2pr.me/164528477962110dab05459 \n2. Enter Email used in registration to the filed below\n3. OK \n\nPeer2Profit is a Docker based application that can be run alongsite other containers deployed on LMDS. App will use some of your Internet bandwidth to generate profit. Earnings depend on your geographical location rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/Peer2Profit.php \n\nProvide Email you registered with Peer2Profit" 22 80 your@email --title "Peer2Profit Container Setup" 3>&1 1>&2 2>&3)
 
+exitstatus=$?
+if [ $exitstatus = 0 ]
+	then
+		if [ -d services/peer2profit ]
+		then
+			echo -e "\e[36;1mPeer2Profit already deployed - check docker-compose.yml\e[0m"
+			echo -e "\e[36;1mEdit and copy definitions from ~/LMDS/services/peer2profit/service.yml\e[0m"
+		else
+			mkdir services/peer2profit
+			touch .templates/peer2profit/service.yml
+			cat > .templates/peer2profit/service.yml <<EOF
+  peer2profit01:
+    container_name: peer2profit01
+    image: peer2profit/peer2profit_x86_64:latest
+    environment:
+      P2P_EMAIL: ${peeremail}
+    restart: unless-stopped
+EOF
+			cat .templates/peer2profit/service.yml >> docker-compose.yml
+			cp .templates/peer2profit/service.yml services/honeygain/
+			cat >> services/selection.txt <<EOF 
+peer2profit
+EOF
+			echo -e "\e[36;1mOK - Container definition added to the docker-compose file\e[0m"
+			echo -e "run \e[104;1mdocker-compose up -d\e[0m create container"
+			fi
+	else
+    	echo -e "\e[36;1mCancel - Container not created\e[0m"
+	fi
 		;;
 	esac
 	;;

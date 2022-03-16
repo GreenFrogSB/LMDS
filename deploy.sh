@@ -391,7 +391,7 @@ if [ $exitstatus = 0 ] && [ -z "$honeymail" ]
 		if [ -d services/honeygain ]
 		then
 			echo -e "\e[36;1mHoneygain already deployed - check docker-compose.yml\e[0m"
-			echo -e "\e[36;1mEdit and copy definitions from ~/LMDS/services/honeygain/service.yml\e[0m"
+			echo -e "\e[36;1mIf missing, edit and copy definitions from ~/LMDS/services/honeygain/service.yml\e[0m"
 		else
 			mkdir services/honeygain
 			mkdir .templates/honeygain
@@ -411,7 +411,7 @@ honeygain
 EOF
 			docker run --privileged --rm tonistiigi/binfmt --install x86_64  &> /dev/null
 			echo -e "\e[36;1mOK - Container definition added to the docker-compose file\e[0m"
-			echo -e "run \e[104;1mdocker-compose up -d\e[0m create container"
+			echo -e "\e[36;1mrun \e[104;1mdocker-compose up -d\e[0m to create container\e[0m"
 			fi
 	else
     	echo -e "\e[36;1mCancel - Container not created\e[0m"
@@ -428,7 +428,7 @@ if [ $exitstatus = 0 ]
 		if [ -d services/peer2profit ]
 		then
 			echo -e "\e[36;1mPeer2Profit already deployed - check docker-compose.yml\e[0m"
-			echo -e "\e[36;1mEdit and copy definitions from ~/LMDS/services/peer2profit/service.yml\e[0m"
+			echo -e "\e[36;1mIf missing, edit and copy definitions from ~/LMDS/services/peer2profit/service.yml\e[0m"
 		else
 			mkdir services/peer2profit
 			mkdir .templates/peer2profit
@@ -442,13 +442,13 @@ if [ $exitstatus = 0 ]
     restart: unless-stopped
 EOF
 			cat .templates/peer2profit/service.yml >> docker-compose.yml
-			cp .templates/peer2profit/service.yml services/honeygain/
+			cp .templates/peer2profit/service.yml services/peer2profit/
 			cat >> services/selection.txt <<EOF 
 peer2profit
 EOF
 			docker run --privileged --rm tonistiigi/binfmt --install x86_64 &> /dev/null
 			echo -e "\e[36;1mOK - Container definition added to the docker-compose file\e[0m"
-			echo -e "run \e[104;1mdocker-compose up -d\e[0m create container"
+			echo -e "\e[36;1mrun \e[104;1mdocker-compose up -d\e[0m to create container\e[0m"
 			fi
 	else
     	echo -e "\e[36;1mCancel - Container not created\e[0m"

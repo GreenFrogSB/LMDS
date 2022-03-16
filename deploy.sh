@@ -394,6 +394,7 @@ if [ $exitstatus = 0 ] && [ -z "$honeymail" ]
 			echo -e "\e[36;1mEdit and copy definitions from ~/LMDS/services/honeygain/service.yml\e[0m"
 		else
 			mkdir services/honeygain
+			mkdir .templates/honeygain
 			touch .templates/honeygain/service.yml
 			cat > .templates/honeygain/service.yml <<EOF
 			
@@ -408,7 +409,7 @@ EOF
 			cat >> services/selection.txt <<EOF 
 honeygain
 EOF
-			docker run --privileged --rm tonistiigi/binfmt --install x86_64  >> /dev/null
+			docker run --privileged --rm tonistiigi/binfmt --install x86_64  &> /dev/null
 			echo -e "\e[36;1mOK - Container definition added to the docker-compose file\e[0m"
 			echo -e "run \e[104;1mdocker-compose up -d\e[0m create container"
 			fi
@@ -430,6 +431,7 @@ if [ $exitstatus = 0 ]
 			echo -e "\e[36;1mEdit and copy definitions from ~/LMDS/services/peer2profit/service.yml\e[0m"
 		else
 			mkdir services/peer2profit
+			mkdir .templates/peer2profit
 			touch .templates/peer2profit/service.yml
 			cat > .templates/peer2profit/service.yml <<EOF
   peer2profit01:
@@ -444,7 +446,7 @@ EOF
 			cat >> services/selection.txt <<EOF 
 peer2profit
 EOF
-			docker run --privileged --rm tonistiigi/binfmt --install x86_64  >> /dev/null
+			docker run --privileged --rm tonistiigi/binfmt --install x86_64 &> /dev/null
 			echo -e "\e[36;1mOK - Container definition added to the docker-compose file\e[0m"
 			echo -e "run \e[104;1mdocker-compose up -d\e[0m create container"
 			fi

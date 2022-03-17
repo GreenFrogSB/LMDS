@@ -374,7 +374,7 @@ case $mainmenu_selection in
 
 	case $earn_sellection in
 	"earnapp")
-		if (whiptail --title "EarnApp" --yesno "Native Linux App not a container. \nnThis App will use some of your Internet bandwidth to generate profit. \nEarnings depend on your geographical location rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/earnwithlmds.php \n\nThis is not CPU intensive process, therefore can be run on low powered devices like Raspberry Pi \n\nCreate an acount before continuing at: \nhttps://earnapp.com/i/snq8y4m" 20 70)
+		if (whiptail --title "EarnApp" --yesno "Native Linux App not a container. \nnThis App will use some of your Internet bandwidth to generate profit. \nEarnings depend on your geographical location rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/EarnAppLMDS.php \n\nThis is not CPU intensive process, therefore can be run on low powered devices like Raspberry Pi \n\nCreate an acount before continuing at: \nhttps://earnapp.com/i/snq8y4m" 20 70)
 		then 
 			sudo ./scripts/earnlmds.sh
 fi
@@ -420,7 +420,7 @@ EOF
 
 		;;
 	"peer2profit")
-peeremail=$(whiptail --inputbox "Steps: \n1. Register at: https://p2pr.me/164528477962110dab05459 \n2. Enter Email used in registration to the filed below\n3. OK \n\nPeer2Profit is a Docker based application that can be run alongsite other containers deployed on LMDS. App will use some of your Internet bandwidth to generate profit. Earnings depend on your geographical location rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/Peer2Profit.php \n\nProvide Email you registered with Peer2Profit" 22 80 your@email --title "Peer2Profit Container Setup" 3>&1 1>&2 2>&3)
+peeremail=$(whiptail --inputbox "Steps: \n1. Register at: https://p2pr.me/164528477962110dab05459 \n2. Enter Email used in registration to the filed below\n3. OK \n\nPeer2Profit is a Docker based application that can be run alongsite other containers deployed on LMDS. App will use some of your Internet bandwidth to generate profit. Earnings depend on your geographical location rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/Peer2ProfitLMDS.php \n\nProvide Email you registered with Peer2Profit" 22 80 your@email --title "Peer2Profit Container Setup" 3>&1 1>&2 2>&3)
 
 exitstatus=$?
 if [ $exitstatus = 0 ]

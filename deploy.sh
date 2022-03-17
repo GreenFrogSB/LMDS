@@ -397,7 +397,6 @@ if [ $exitstatus = 0 ] && [ -z "$honeymail" ]
 			mkdir .templates/honeygain
 			touch .templates/honeygain/service.yml
 			cat > .templates/honeygain/service.yml <<EOF
-			
   $honeyname:
     container_name: $honeyname
     image: honeygain/honeygain

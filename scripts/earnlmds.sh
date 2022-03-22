@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # LICENSE_CODE ZON ISC
-
 PRINT_PERR=0
 OS_NAME=$(uname -s)
 OS_ARCH=$(uname -m)

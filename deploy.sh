@@ -363,6 +363,15 @@ case $mainmenu_selection in
 
        #Earn with LMDS ---------------------------------------------------------------------
 "earn")
+#Add x86 to crontab so it rund after reboot 
+        function addtocrontab () {
+          local frequency=$1
+          local command=$2
+          local job="$frequency $command"
+        cat <(fgrep -i -v "$command" <(crontab -l)) <(echo "$job") | crontab -
+        }
+        addtocrontab "@reboot" "docker run --privileged --rm tonistiigi/binfmt --install x86_64"
+# Earn options 
 	earn_sellection=$(
 		whiptail --title "Earn with LMDS" --menu --notags \
 			"Current Earning Options supported by LMDS" 20 78 12 -- \

@@ -28,6 +28,7 @@ Create Docker server and start microservices in minutes with LMDS.
   <li> Emby - Media manager like Plex : <b>8096</b></li>
   <li> Plex - Media manager : 32400/web</li>
   <li> Ombi - Plex Requests Server : 3579</li>
+  <li> Overseerr - Plex Requests Server : 5055</li>
   <li> EmbyStat - Statistics for Emby : 6555</li>
   <li> TVheadend - TV streaming server : 9981 </li>
   <li> NPMP Server - NGINX + PHP + MariaDB + phpMyAdmin: 80 (Instructions: https://greenfrognest.com/LMDSwebServ.php)</li>

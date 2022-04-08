@@ -1,0 +1,12 @@
+  overseerr:
+    image: ghcr.io/linuxserver/overseerr
+    container_name: overseerr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+    volumes:
+      - /volumes/overseerr/config:/config
+    ports:
+      - 5055:5055
+    restart: unless-stopped

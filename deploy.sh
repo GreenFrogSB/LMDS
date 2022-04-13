@@ -214,7 +214,7 @@ case $mainmenu_selection in
 	else
 
 		echo -e "     "
-		echo -e "\e[33;1m    Instaling Docker - please wait\e[0m"
+		echo -e "\e[33;1m    Installing Docker - please wait\e[0m"
 		curl -fsSL https://get.docker.com | sh &> /dev/null
 		sudo usermod -aG docker $USER &> /dev/null
 		# backporting libseccomp to prevent issues bug 8,9,10 and 11
@@ -229,7 +229,7 @@ case $mainmenu_selection in
 	if command_exists docker-compose; then
 		echo -e "\e[30;48;5;82m   Docker-compose already installed\e[0m"
 	else
-		echo -e "\e[33;1m    Instaling docker-compose - please wait\e[0m"
+		echo -e "\e[33;1m    Installing docker-compose - please wait\e[0m"
 		sudo apt install -y docker-compose &> /dev/null
 		echo -e "\e[32;1m    Docker-compose Installed\e[0m"
 		echo -e "     "
@@ -398,7 +398,12 @@ honeyname=$(whiptail --inputbox "Steps: \n6. Enter a container name for deployme
 exitstatus=$?
 if [ $exitstatus = 0 ] && [ -z "$honeymail" ]
 	then
+		[ -f ./services/selection.txt ] && rm ./services/selection.txt
+		#first run service directory wont exist
+		[ -d ./services ] || mkdir services
+		touch ./services/selection.txt
 		#echo $honeyemail $honeypass $honeyname
+		
 		if [ -d services/honeygain ]
 		then
 			echo -e "\e[36;1mHoneygain already deployed - check docker-compose.yml\e[0m"

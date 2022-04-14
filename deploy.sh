@@ -214,7 +214,7 @@ case $mainmenu_selection in
 	else
 
 		echo -e "     "
-		echo -e "\e[33;1m    Instaling Docker - please wait\e[0m"
+		echo -e "\e[33;1m    Installing Docker - please wait\e[0m"
 		curl -fsSL https://get.docker.com | sh &> /dev/null
 		sudo usermod -aG docker $USER &> /dev/null
 		# backporting libseccomp to prevent issues bug 8,9,10 and 11
@@ -229,7 +229,7 @@ case $mainmenu_selection in
 	if command_exists docker-compose; then
 		echo -e "\e[30;48;5;82m   Docker-compose already installed\e[0m"
 	else
-		echo -e "\e[33;1m    Instaling docker-compose - please wait\e[0m"
+		echo -e "\e[33;1m    Installing docker-compose - please wait\e[0m"
 		sudo apt install -y docker-compose &> /dev/null
 		echo -e "\e[32;1m    Docker-compose Installed\e[0m"
 		echo -e "     "
@@ -404,7 +404,7 @@ if [ $exitstatus = 0 ] && [ -z "$honeymail" ]
 			echo -e "\e[36;1mHoneygain already deployed - check docker-compose.yml\e[0m"
 			echo -e "\e[36;1mIf missing, edit and copy definitions from ~/LMDS/services/honeygain/service.yml\e[0m"
 		else
-			mkdir services/honeygain
+			mkdir -p services/honeygain
 			mkdir .templates/honeygain
 			touch .templates/honeygain/service.yml
 			cat > .templates/honeygain/service.yml <<EOF
@@ -440,7 +440,7 @@ if [ $exitstatus = 0 ]
 			echo -e "\e[36;1mPeer2Profit already deployed - check docker-compose.yml\e[0m"
 			echo -e "\e[36;1mIf missing, edit and copy definitions from ~/LMDS/services/peer2profit/service.yml\e[0m"
 		else
-			mkdir services/peer2profit
+			mkdir -p services/peer2profit
 			mkdir .templates/peer2profit
 			touch .templates/peer2profit/service.yml
 			cat > .templates/peer2profit/service.yml <<EOF

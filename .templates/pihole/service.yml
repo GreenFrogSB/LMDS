@@ -1,15 +1,15 @@
   pihole:
     container_name: pihole
     image: pihole/pihole:latest
-    # network_mode: host
-    ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      - "67:67/udp"
-      - "8089:80/tcp"
-      #- "443:443/tcp"
+    network_mode: host  # to facilitate proper DHCP propagation. https://docs.pi-hole.net/docker/dhcp/
+    #ports:
+    #  - "53:53/tcp"
+    #  - "53:53/udp"
+    #  - "67:67/udp"
+    #  - "8089:80/tcp"
+    #  - "443:443/tcp"
     env_file:
-      - ./services/pihole/pihole.env
+      - ./services/pihole/pihole.env  # check the file location for more options to configure  
     volumes:
        - ./volumes/pihole/etc-pihole/:/etc/pihole/
        - ./volumes/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/

@@ -1,7 +1,7 @@
 #ignore data folders for containers
 /services/
 /volumes/
-/LMDSBackups//
+/LMDSBackups/
 /media/
 /Downloads/
 /downloads/

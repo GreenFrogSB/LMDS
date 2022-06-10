@@ -392,15 +392,17 @@ case $mainmenu_selection in
 		then 
 			sudo ./scripts/earnlmds.sh
 fi
-		;;
+;;
 	"honeygain")
 honeyemail=$(whiptail --inputbox "Steps: \n1. Register at: https://r.honeygain.me/GREENFDEC8 \n2. Enter Email used during registration to the filed below\n3. OK \n\nHoneygain is a Docker based application that can be run alongsite other containers deployed on LMDS. App will use some of your Internet bandwidth to generate profit. Earnings depend on your geographical location rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/HoneyGainLMDS.php \n\nEnter Email you registered with Honeygain" 22 80 your@email --title "Honeygain Container Setup" 3>&1 1>&2 2>&3)
 honeypass=$(whiptail --inputbox "Steps: \n4. Enter Honeygain password you use on the website \n5. OK" 15 60 password --title "Honeygain Container Setup" 3>&1 1>&2 2>&3) 
 honeyname=$(whiptail --inputbox "Steps: \n6. Enter a container name for deployment \n7. OK" 15 60 honeygain01 --title "Honeygain Container Setup" 3>&1 1>&2 2>&3)
 
 exitstatus=$?
-if [ $exitstatus = 0 ] && [ -z "$honeymail" ]
+if [ $exitstatus = 0 ] && [ -z "$honeyemail" ]
 	then
+		echo -e "\e[36;1mCancel - Container not created\e[0m"
+	else
 		#echo $honeyemail $honeypass $honeyname
 		if [ -d services/honeygain ]
 		then
@@ -425,11 +427,9 @@ EOF
 			docker run --privileged --rm tonistiigi/binfmt --install x86_64  &> /dev/null
 			echo -e "\e[36;1mOK - Container definition added to the docker-compose file\e[0m"
 			echo -e "\e[36;1mrun \e[104;1mdocker-compose up -d\e[0m to create container\e[0m"
-			fi
-	else
-    	echo -e "\e[36;1mCancel - Container not created\e[0m"
+			fi	
 	fi
-		;;
+;;
 
 	"iproyal")
 iproyalemail=$(whiptail --inputbox "Steps: \n1. Register at: https://iproyal.com/pawns?r=lmds \n2. Enter Email used during registration to the filed below\n3. OK \n\nIPRoyal Pown is a Docker based application that can be run alongsite other containers deployed on LMDS. App will use some of your Internet bandwidth to generate profit. Earnings depend on your geographical location rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/IPRoyalLMDS.php \n\nEnter Email you registered with IPRoyals" 22 80 your@email --title "IPRoyal Container Setup" 3>&1 1>&2 2>&3)
@@ -439,6 +439,8 @@ iproyalname=$(whiptail --inputbox "Steps: \n6. Enter a container name for deploy
 exitstatus=$?
 if [ $exitstatus = 0 ] && [ -z "$iproyalemail" ]
 	then
+	echo -e "\e[36;1mCancel - Container not created\e[0m"
+else
 		#echo $honeyemail $honeypass $honeyname
 		if [ -d services/iproyal ]
 		then
@@ -461,14 +463,11 @@ EOF
 			cat >> services/selection.txt <<EOF 
 iproyal
 EOF
-			docker run --privileged --rm tonistiigi/binfmt --install x86_64  &> /dev/null
 			echo -e "\e[36;1mOK - Container definition added to the docker-compose file\e[0m"
 			echo -e "\e[36;1mrun \e[104;1mdocker-compose up -d\e[0m to create container\e[0m"
 			fi
-	else
-    	echo -e "\e[36;1mCancel - Container not created\e[0m"
 	fi
-		;;
+;;
 
 	"peer2profit")
 peeremail=$(whiptail --inputbox "Steps: \n1. Register at: https://p2pr.me/164528477962110dab05459 \n2. Enter Email used in registration to the filed below\n3. OK \n\nPeer2Profit is a Docker based application that can be run alongsite other containers deployed on LMDS. App will use some of your Internet bandwidth to generate profit. Earnings depend on your geographical location rather than Internet speed or anything else. \n\nFor more details on how does it work visit: https://greenfrognest.com/Peer2ProfitLMDS.php \n\nProvide Email you registered with Peer2Profit" 22 80 your@email --title "Peer2Profit Container Setup" 3>&1 1>&2 2>&3)

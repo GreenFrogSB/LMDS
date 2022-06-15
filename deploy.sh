@@ -533,7 +533,7 @@ EOF
 			echo -e "     Please run \e[32;1mrclone config\e[0m and create remote \e[34;1m(gdrive)\e[0m for backup   "
 			echo -e "     "
 			echo -e "     Do as folows:"
-			echo -e "      [n] [gdrive] [12] [Enter] [Enter] [1] [Enter] [Enter] [n] [n]"
+			echo -e "      [n] [gdrive] [13] [Enter] [Enter] [1] [Enter] [Enter] [n] [n]"
 			echo -e "      [Copy link from SSH console and paste it into the browser]"
 			echo -e "      [Login to your google account]"
 			echo -e "      [Copy token from Google and paste it into the SSH console]"

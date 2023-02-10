@@ -17,6 +17,7 @@ sudo apt-get install python3 python3-pip -y &> /dev/null
 
 echo  -e "\e[33;1m    Installing new Docker-compose via pip3\e[0m"
 sudo pip3 install docker-compose  &> /dev/null
+sudo mv  /usr/local/bin/docker-compose /usr/bin/docker-compose  &> /dev/null
 
 echo  -e "\e[33;1m    Starting stack up again\e[0m"
 docker-compose up -d

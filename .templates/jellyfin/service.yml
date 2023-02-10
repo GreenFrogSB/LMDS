@@ -1,5 +1,5 @@
   jellyfin:
-    image: ghcr.io/linuxserver/jellyfin:bionic
+    image: ghcr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
     environment:
       - PUID=1000

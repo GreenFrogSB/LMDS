@@ -1,42 +1,49 @@
 #######################################
-# NGINX nginx01  (WebServ NPMP)
-#######################################
+# NGINX Servers (WebServ NPMP)
+
   nginx01:
-    image: nginx:alpine
-    container_name: nginx01
+    image: nginx:latest
+    container_name: Web-Serv1
     restart: unless-stopped
     tty: true
     ports:
-      - 80:80
+      - 60101:80
     volumes:
-      - ./volumes/WebServ/ngnix01/www/html/:/var/www/html
-      - ./volumes/WebServ/ngnix01/config/conf.d/:/etc/nginx/conf.d/
+      - ./volumes/WebServ/ngnix01/www/html/:/var/www/html/NG01
+      - ./volumes/WebServ/ngnix01/config/conf.d/:/etc/nginx/conf.d
+    links:
+      - php-fpm8
+    depends_on:
+      - php-fpm8
 
-#######################################
-# PHP7 (WebServ NPMP)
-#######################################
-  php7:
-    build:
-      context: .
-      dockerfile: .templates/web/config/php/dockerfile
-    image: lmds/php:7.4-fpm-alpine
-    container_name: php7
+  nginx02:
+    image: nginx:latest
+    container_name: Web-Serv2
     restart: unless-stopped
     tty: true
-    environment:
-      SERVICE_NAME: php7
-    working_dir: /var/www/html
+    ports:
+      - 60102:80
     volumes:
-      - ./volumes/WebServ/ngnix01/www/html/:/var/www/html
-      - ./volumes/WebServ/php7/config.d/:/usr/local/etc/php/conf.d/
-      - ./volumes/WebServ/php7/php.ini/:/usr/local/etc/php/
+      - ./volumes/WebServ/ngnix02/www/html/:/var/www/html/NG02
+      - ./volumes/WebServ/ngnix02/config/conf.d/:/etc/nginx/conf.d
+    links:
+      - php-fpm8
+    depends_on:
+      - php-fpm8
 
-#######################################
+# PHP8 FPN (WebServ NPMP)
+  php-fpm8:
+    image: php:8.2-fpm
+    container_name: PHP-8-FPM
+    restart: unless-stopped
+    volumes:
+      - ./volumes/WebServ/ngnix01/www/html/:/var/www/html/NG01
+      - ./volumes/WebServ/ngnix02/www/html/:/var/www/html/NG02
+
 # MariaDB (WebServ NPMP)
-#######################################
   mariadb:
     image: linuxserver/mariadb
-    container_name: mariadb
+    container_name: MariaDB
     restart: unless-stopped
     environment:
       - TZ=UTC
@@ -49,13 +56,11 @@
     volumes:
       - ./volumes/WebServ/mariadb:/config # Contains the db itself and all assorted settings.
     ports:
-      - 3306:3306/tcp # Mariadb listens on this por
+      - 3306:3306/tcp # MariaDB listens on this port
 
-#######################################
 # PHP MyAdmin (WebServ NPMP)
-#######################################
   phpmyadmin:
-    image: linuxserver/phpmyadmin:5.1.3
+    image: phpmyadmin
     container_name: phpmyadmin
     restart: unless-stopped
     environment:

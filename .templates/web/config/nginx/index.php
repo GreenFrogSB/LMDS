@@ -11,13 +11,14 @@
 
 </head>
 
-  <body class=" bg-dark">
+  <body class="bg-dark">
 
+  <div class="bg-dark">
 
-  <div class="container">
+    <div class="container">
     <div class="text-center pt-3">
       <div class="bg-dark text-white">
-        <h1> LMDS WebServer is <font color=#3cfc44>UP </font>(<?php print $_SERVER['SERVER_SOFTWARE']; ?>)</h1>
+        <h1> LMDS <font color=#3cfc44> <?php print $_SERVER['SERVER_NAME']; ?> </font> Web Server is <font color=#3cfc44> UP </font></h1>
         <h3 class="mb-3">
           <font color=#009900>NGINX</font> +
           <font color=#cccccc>MariaDB</font> +
@@ -27,61 +28,26 @@
         </h3>
 
 
-        <p>This <font color=#55b5e2>index.php</font> file is locard in: <br>
-          <font color=#edd207>~/LMDS/volumes/WebServ/ngnix01/www/html/index.php</font><br>
+        <p>This <font color=#55b5e2>index.php</font> file location: <br>
+          <font color=#edd207>~/LMDS/volumes/WebServ/<?php print $_SERVER['SERVER_NAME']; ?>/www/html/index.php</font><br>
           Replace it with your own project.
         </p>
 
         <div class=" bg-dark text-white m-2">
-          <a target="_blank" href="http://<?php print $_SERVER{
-                                            'HTTP_HOST'}; ?>:8888">
+          <a target="_blank" href="http://<?php print strtok($_SERVER['HTTP_HOST'], ':'); ?>:8888">
             <font color=#6C78AF>php</font>
             <font color=#F89C0E>MyAdmin</font>
           </a>:
-          <?php print $_SERVER{
-            'HTTP_HOST'}; ?>:8888<br>
+          <?php print strtok($_SERVER['HTTP_HOST'], ':'); ?>:8888<br>
 
           <font color=#edd207>Trouble login into phpMyAdmin - use Chrome Incognito mode.</font>
 
           <br>
-          SERVER: mariadb<br>
-          USER: lmds <br>
+          MariaDB: <?php print strtok($_SERVER['HTTP_HOST'], ':'); ?>:3306<br>
+          USER: lmds or root <br>
           PASSWORD: passw0rd <br>
         </div>
 
-        <?php
-        $dbname = 'lmdsdb';
-        $dbuser = 'lmds';
-        $dbpass = 'passw0rd';
-        $dbhost = 'mariadb';
-
-        $connect = mysqli_connect($dbhost, $dbuser, $dbpass) or die("Unable to Connect to '$dbhost'");
-        mysqli_select_db($connect, $dbname) or die("Could not open the db '$dbname'");
-        ?>
-
-        Database: <?php print  $_SERVER{
-                    'HTTP_HOST'}; ?>:3306<br>
-        MariaDB: <?php echo  $connect->server_info; ?>
-        <?php
-
-        $test_query = "SHOW TABLES FROM $dbname";
-        $result = mysqli_query($connect, $test_query);
-
-        $tblCnt = 0;
-        while ($tbl = mysqli_fetch_array($result)) {
-          $tblCnt++;
-          #echo $tbl[0]."<br />\n";
-        }
-
-        if (!$tblCnt) {
-          echo "<br>There are no tables in the Database";
-        } else {
-          echo "<br>There are $tblCnt tables<br>";
-        }
-
-        /* close connection */
-        $connect->close();
-        ?>
       </div>
     </div>
   </div>
@@ -90,7 +56,7 @@
   // Show all information, defaults to INFO_ALL
   phpinfo();
   ?>
-
+</div>
   </body>
 
   </html>

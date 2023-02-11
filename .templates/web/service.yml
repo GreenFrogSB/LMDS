@@ -1,42 +1,51 @@
 #######################################
-# NGINX nginx01  (WebServ NPMP)
-#######################################
+# NGINX Servers (WebServ NPMP)
+
   nginx01:
-    image: nginx:alpine
-    container_name: nginx01
+    image: nginx:latest
+    container_name: Web-Serv1
     restart: unless-stopped
     tty: true
     ports:
-      - 80:80
+      - 60101:80
     volumes:
-      - ./volumes/WebServ/ngnix01/www/html/:/var/www/html
-      - ./volumes/WebServ/ngnix01/config/conf.d/:/etc/nginx/conf.d/
+      - ./volumes/WebServ/nginx01/www/html/:/var/www/html/nginx01
+      - ./volumes/WebServ/nginx01/config/conf.d/:/etc/nginx/conf.d
+    links:
+      - php-fpm8
+    depends_on:
+      - php-fpm8
 
-#######################################
-# PHP7 (WebServ NPMP)
-#######################################
-  php7:
-    build:
-      context: .
-      dockerfile: .templates/web/config/php/dockerfile
-    image: lmds/php:7.4-fpm-alpine
-    container_name: php7
+  nginx02:
+    image: nginx:latest
+    container_name: Web-Serv2
     restart: unless-stopped
     tty: true
-    environment:
-      SERVICE_NAME: php7
-    working_dir: /var/www/html
+    ports:
+      - 60102:80
     volumes:
-      - ./volumes/WebServ/ngnix01/www/html/:/var/www/html
-      - ./volumes/WebServ/php7/config.d/:/usr/local/etc/php/conf.d/
-      - ./volumes/WebServ/php7/php.ini/:/usr/local/etc/php/
+      - ./volumes/WebServ/nginx02/www/html/:/var/www/html/nginx02
+      - ./volumes/WebServ/nginx02/config/conf.d/:/etc/nginx/conf.d
+    links:
+      - php-fpm8
+    depends_on:
+      - php-fpm8
 
-#######################################
+# PHP8 FPN (WebServ NPMP)
+
+  php-fpm8:
+    image: php:8.2-fpm
+    container_name: PHP-8-FPM
+    restart: unless-stopped
+    volumes:
+      - ./volumes/WebServ/nginx01/www/html/:/var/www/html/nginx01
+      - ./volumes/WebServ/nginx02/www/html/:/var/www/html/nginx02
+
 # MariaDB (WebServ NPMP)
-#######################################
+
   mariadb:
     image: linuxserver/mariadb
-    container_name: mariadb
+    container_name: MariaDB
     restart: unless-stopped
     environment:
       - TZ=UTC
@@ -47,16 +56,15 @@
       - MYSQL_PASSWORD=passw0rd # Set this to the password you want to use for you MYSQL_USER (minimum 4 characters).
       - MYSQL_DATABASE=lmdsdb # Specify the name of a database to be created on image startup.
     volumes:
-      - ./volumes/WebServ/mariadb:/config # Contains the db itself and all assorted settings.
+      - ./volumes/mariadb:/config # Contains the db itself and all assorted settings.
     ports:
-      - 3306:3306/tcp # Mariadb listens on this por
+      - 3306:3306/tcp # MariaDB listens on this port
 
-#######################################
 # PHP MyAdmin (WebServ NPMP)
-#######################################
+
   phpmyadmin:
-    image: linuxserver/phpmyadmin:5.1.3
-    container_name: phpmyadmin
+    image: phpmyadmin
+    container_name: phpMyAdmin
     restart: unless-stopped
     environment:
       - TZ=UTC # Specify a timezone to use
@@ -64,7 +72,7 @@
       - PGID=1000 # Group ID to run as
       - PMA_ARBITRARY=1 # Set to 1 to allow you to connect to any server. Setting to 0 will only allow you to connect to specified hosts
     volumes:
-      - ./volumes/WebServ/phpmyadmin:/config # Contains all relevant configuration files.
+      - ./volumes/phpmyadmin:/config # Contains all relevant configuration files.
     ports:
       - 8888:80/tcp # Web UI
     depends_on:

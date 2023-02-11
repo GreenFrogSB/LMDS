@@ -6,8 +6,9 @@ ip=$(hostname -I | cut -d' ' -f1)
 [ -d ./volumes/WebServ/nginx01/config/conf.d/ ] || mkdir -p ./volumes/WebServ/nginx01/config/conf.d/;
 cp .templates/web/config/nginx/index.php ./volumes/WebServ/nginx01/www/html/index.php;
 cp .templates/web/config/nginx/NG01.conf ./volumes/WebServ/nginx01/config/conf.d/site.conf;
+echo "" 
 echo -e "\e[32;1m    Web Server nginx01 configured \e[0m"
-echo -e "\e[32;1m    Web Server nginx01 startig at: http://$ip:60101 \e[0m"
+echo -e "\e[32;1m    Web Server nginx01 will start at: http://$ip:60101 \e[0m"
 echo "" 
 
 # Server 2 
@@ -16,7 +17,7 @@ echo ""
 cp .templates/web/config/nginx/index.php ./volumes/WebServ/nginx02/www/html/index.php;
 cp .templates/web/config/nginx/NG02.conf ./volumes/WebServ/nginx02/config/conf.d/site.conf;
 echo -e "\e[32;1m    Web Server nginx02 configured \e[0m"
-echo -e "\e[32;1m    Web Server nginx02 startig at: http://$ip:60102 \e[0m"
+echo -e "\e[32;1m    Web Server nginx02 will start at: http://$ip:60102 \e[0m"
 echo "" 
 
 # Install and configure FTP server 
@@ -39,8 +40,10 @@ ssl_enable=NO
 local_root=/home/user' > vsftpd.conf
 
 sudo mv vsftpd.conf /etc/vsftpd.conf &> /dev/null
+sudo chown root:root /etc/vsftpd.conf &> /dev/null
 sudo service vsftpd restart &> /dev/null
 
-echo -e "\e[32;1m    SFTP Server configured \e[0m"
+echo -e "\e[32;1m    sFTP Server configured \e[0m"
 echo -e "\e[32;1m    Use sFTP client of your choice and connect to $ip \e[0m"
 echo -e "\e[32;1m    Use your local username and password \e[0m"
+echo "" 

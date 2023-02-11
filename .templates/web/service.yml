@@ -56,7 +56,7 @@
       - MYSQL_PASSWORD=passw0rd # Set this to the password you want to use for you MYSQL_USER (minimum 4 characters).
       - MYSQL_DATABASE=lmdsdb # Specify the name of a database to be created on image startup.
     volumes:
-      - ./volumes/WebServ/mariadb:/config # Contains the db itself and all assorted settings.
+      - ./volumes/mariadb:/config # Contains the db itself and all assorted settings.
     ports:
       - 3306:3306/tcp # MariaDB listens on this port
 
@@ -64,7 +64,7 @@
 
   phpmyadmin:
     image: phpmyadmin
-    container_name: phpmyadmin
+    container_name: phpMyAdmin
     restart: unless-stopped
     environment:
       - TZ=UTC # Specify a timezone to use
@@ -72,7 +72,7 @@
       - PGID=1000 # Group ID to run as
       - PMA_ARBITRARY=1 # Set to 1 to allow you to connect to any server. Setting to 0 will only allow you to connect to specified hosts
     volumes:
-      - ./volumes/WebServ/phpmyadmin:/config # Contains all relevant configuration files.
+      - ./volumes/phpmyadmin:/config # Contains all relevant configuration files.
     ports:
       - 8888:80/tcp # Web UI
     depends_on:

@@ -1,22 +1,24 @@
 #!/bin/bash
-
 ip=$(hostname -I | cut -d' ' -f1)
+
 # Server 1
 [ -d ./volumes/WebServ/nginx01/www/html/ ] || mkdir -p ./volumes/WebServ/nginx01/www/html/;
 [ -d ./volumes/WebServ/nginx01/config/conf.d/ ] || mkdir -p ./volumes/WebServ/nginx01/config/conf.d/;
 cp .templates/web/config/nginx/index.php ./volumes/WebServ/nginx01/www/html/index.php;
 cp .templates/web/config/nginx/NG01.conf ./volumes/WebServ/nginx01/config/conf.d/site.conf;
 echo -e "\e[32;1m    Web Server nginx01 configured \e[0m"
-echo -e "\e[32;1m    Web Server nginx01 startig at: http://$ip:60101 \e[0m" 
+echo -e "\e[32;1m    Web Server nginx01 startig at: http://$ip:60101 \e[0m"
 echo "" 
+
 # Server 2 
 [ -d ./volumes/WebServ/nginx02/www/html/ ] || mkdir -p ./volumes/WebServ/nginx02/www/html/;
 [ -d ./volumes/WebServ/nginx02/config/conf.d/ ] || mkdir -p ./volumes/WebServ/nginx02/config/conf.d/;
 cp .templates/web/config/nginx/index.php ./volumes/WebServ/nginx02/www/html/index.php;
 cp .templates/web/config/nginx/NG02.conf ./volumes/WebServ/nginx02/config/conf.d/site.conf;
 echo -e "\e[32;1m    Web Server nginx02 configured \e[0m"
-echo -e "\e[32;1m    Web Server nginx02 startig at: http://$ip:60102 \e[0m" 
+echo -e "\e[32;1m    Web Server nginx02 startig at: http://$ip:60102 \e[0m"
 echo "" 
+
 # Install and configure FTP server 
 sudo apt install vsftpd -y &> /dev/null
 sudo mv /etc/vsftpd.conf /etc/vsftpd.conf.old &> /dev/null

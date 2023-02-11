@@ -9,7 +9,7 @@
     ports:
       - 60101:80
     volumes:
-      - ./volumes/WebServ/ngnix01/www/html/:/var/www/html/NG01
+      - ./volumes/WebServ/ngnix01/www/html/:/var/www/html/nginx01
       - ./volumes/WebServ/ngnix01/config/conf.d/:/etc/nginx/conf.d
     links:
       - php-fpm8
@@ -24,7 +24,7 @@
     ports:
       - 60102:80
     volumes:
-      - ./volumes/WebServ/ngnix02/www/html/:/var/www/html/NG02
+      - ./volumes/WebServ/ngnix02/www/html/:/var/www/html/nginx02
       - ./volumes/WebServ/ngnix02/config/conf.d/:/etc/nginx/conf.d
     links:
       - php-fpm8
@@ -38,8 +38,8 @@
     container_name: PHP-8-FPM
     restart: unless-stopped
     volumes:
-      - ./volumes/WebServ/ngnix01/www/html/:/var/www/html/NG01
-      - ./volumes/WebServ/ngnix02/www/html/:/var/www/html/NG02
+      - ./volumes/WebServ/ngnix01/www/html/:/var/www/html/nginx01
+      - ./volumes/WebServ/ngnix02/www/html/:/var/www/html/nginx02
 
 # MariaDB (WebServ NPMP)
 

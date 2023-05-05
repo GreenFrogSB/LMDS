@@ -10,34 +10,34 @@ Create Docker server and start microservices in minutes with LMDS.
 
 <b>What is currently a part of the LMDS Stack:</b>
 
-<ul>
-  <li>Portainer - GUI Docker Manager :9000</li>
-  <li> Sonarr : 8989</li>
-  <li> Medusa : 8081</li>
-  <li> Radarr : 7878</li>
-  <li> Lidarr : 8686</li>
-  <li> Bazarr : 6767</li>
-  <li> Jackett : 9117</li>
-  <li> Prowlarr - Jackett alternative (dev) : 9696</li>
-  <li> Deluge - Torrent Client : 8112</li>
-  <li> qBittorrent - Torrent Client : 15080</li>
-  <li> Transmission - Torrent Client : 9091</li>
-  <li> NZBGet - Usenet groups client : 6789</li>
-  <li> SABnzbd - Usenet groups client : 8080</li>
-  <li> JellyFin - Media manager OpenSource : <b>8096</b></li>
-  <li> Emby - Media manager like Plex : <b>8096</b></li>
-  <li> Plex - Media manager : 32400/web</li>
-  <li> Ombi - Plex Requests Server : 3579</li>
-  <li> Overseerr - Plex Requests Server : 5055</li>
-  <li> EmbyStat - Statistics for Emby : 6555</li>
-  <li> TVheadend - TV streaming server : 9981 </li>
-  <li> NPMP Server - NGINX + PHP + MariaDB + phpMyAdmin: 80 (Instructions: https://greenfrognest.com/LMDSwebServ.php)</li>
-  <li> Pi-Hole - Private DNS sinkhole : 8089 <b>WebPass: <i>greenfrog</i></b></li>
-  <li> VPN-Client - OpenVPN Gateway (Instructions: https://greenfrognest.com/LMDSVPN.php)</li>
-  <li> Traefik 2 - Reverse Proxy (Instructions: https://greenfrognest.com/LMDSTraefikProxy.php)</li>
-  </ul>
-<br>
-<i>Numbers after ":" identify a port that particular container will respond on, i.e. Portainer default port is :9000, point your browser it to your server IP adding :9000 at the end i.e. http://192.168.100.100:9000 you will see Portainer login page.</i>
+| name| Description | port/access |
+|-----|-------------|-------------|
+| [Portainer](https://www.portainer.io/)| Web UI Docker Manager | 9000|
+| [Sonarr](https://sonarr.tv/)| Content Manager (TV Shows) | 8989 |
+| [Medusa](https://pymedusa.com/) | Automatic Video Library Manager for TV Shows | 8081 |
+| [Radarr](https://radarr.video/)| Content Manager (Movies) | 7878 |
+| [Lidarr](https://lidarr.audio/)| Content Manager (Music) | 8686 |
+| [Bazarr](https://www.bazarr.media/)| Subtitles Manager | 6767 |
+| [Jackett](https://github.com/Jackett/Jackett)| Torrent Socket | 9117 |
+| [Prowlarr](https://prowlarr.com/)| Jackett alternative (dev) | 9696 |
+| [Deluge](https://deluge-torrent.org/)| Torrent Client | 8112 |
+| [qBittorrent](https://www.qbittorrent.org/)| Torrent Client | 15080 |
+| [Transmission](https://transmissionbt.com/)| Torrent Client | 9091 |
+| [NZBGet](https://nzbget.net/)| Usenet Client | 6789 |
+| [SABznbd](https://sabnzbd.org/)| Usenet Client | 8080 |
+| [JellyFin](https://jellyfin.org/)| Media Manager OpenSource | 8096 |
+| [Emby](https://emby.media/)| Media Manager | 8096 |
+| [Plex](https://www.plex.tv/)| Media Manager | 32400 (go to `/web`) |
+| [Ombi](https://github.com/Ombi-app/Ombi)| Plex Requests Server | 3579 |
+| [Overseerr](https://github.com/sct/overseerr) | Plex Requests Server | 5055 |
+| [EmbyStat](https://github.com/mregni/EmbyStat)| Statistics for emby  | 6555 |
+| [TVheadend](https://tvheadend.org/)| TV streaming server | 9981 |
+| [Pi-Hole](https://pi-hole.net/)| Private DNS sinkhole | 8089 |
+| [NPMP](https://greenfrognest.com/LMDSwebServ.php)| NGINX + PHP + riaDB + phpMyAdmin | (Instructions: https://greenfrognest.com/LMDSwebServ.php) |
+| [VPN-Client](https://github.com/dperson/openvpn-client)| OpenVPN Gateway | (Instructions: https://greenfrognest.com/LMDSVPN.php) |
+| [Traefik 2](https://traefik.io/traefik)| Reverse Proxy | (Instructions: https://greenfrognest.com/LMDSTraefikProxy.php) |
+
+<i>A port is what you will use to access a given service that particular container will respond on, i.e. Portainer default port is :9000, point your browser it to your server IP adding :9000 at the end i.e. http://192.168.100.100:9000 you will see Portainer login page.</i>
 
 ### Raspberry Pi LMDS Server Docker Edition
 
@@ -53,16 +53,19 @@ Blog link: http://greenfrognest.com/lmdsondocker.php
 Static IP address is not absolutely necessary just to try the project to find out if you like it or not, but in case if you would like to properly utilize pi-hole in your network - you would have to point your router towards RPi IP for DNS resolution and having it static would be mandatory.</b>
 
 - install git using a command:
-<pre><code>sudo apt-get install git</code></pre>
+  
+  <pre><code>sudo apt-get install git</code></pre>
 
 - Clone the repository with:
-<pre><code>git clone https://github.com/GreenFrogSB/LMDS.git ~/LMDS</code></pre>
+  
+  <pre><code>git clone https://github.com/GreenFrogSB/LMDS.git ~/LMDS</code></pre>
 
 <i>Do not change name of the folder on your local system it should stay as is for the script to work properly</i>
 
 - Enter the directory and run:
 
 <pre><code>cd ~/LMDS</code></pre>
+
 <pre><code>./deploy.sh</code></pre>
 
 ## Menu
@@ -96,3 +99,10 @@ Static IP address is not absolutely necessary just to try the project to find ou
 ### Backup and Restore LMDS
 
 <p> This option will let you backup LMDS config and store it locally or in the cloud. Local backup is great for small changes that you are not sure of, so you can recover from failure quickly. Backup can be also configured to go in to the cloud i.e. Google Drive, Amazon, DropBox etc. This is great in case you would like to migrate or completely wipeout current SD card but in the same time you would like easily recover LMDS in to new OS installation. </p>
+
+## Notes about docker networking
+
+By default the script sets everything up with the default bridge networks in docker. So when configuring application communication you **should not** use `localhost`. You need to use different domain names to access the services:
+
+- Cross-service; Apps that are also part of LMDS that want to talk to other LMDS apps will connect using **the service name** not `localhost`. So when configuring a service that is running LMDS to talk to another LMDS use the service name (whatever it's called in `~/LMDS/docker-compose.yml`). For example to setup prowlarr to talk to sonarr you will need to use `http://prowlarr:9696` and `http://sonarr:8989` **not** `http://localhost:9696` and `http://localhost:8989`.
+- Cross-network; Apps that want to communicate across network (on a different device) will need to use the IP or hostname of the raspberry pi to connect. So if you want to connect to prowlarr on port 9696 you can do either `http://<pi IP here>:9696` or `http://<pi hostname here>:9696`
